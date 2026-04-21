@@ -1,0 +1,1 @@
+import{n as e,t}from"./jsx-runtime-DQjoyD3y.js";var n=e(),r=t();function i(){let e=(0,n.c)(1),t;return e[0]===Symbol.for(`react.memo_cache_sentinel`)?(t=(0,r.jsx)(`div`,{style:{padding:`100px`,color:`white`,background:`black`,height:`100vh`},children:(0,r.jsx)(`h1`,{children:`Main Dashboard Diagnostic`})}),e[0]=t):t=e[0],t}export{i as default};
