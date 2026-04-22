@@ -6,7 +6,6 @@ use App\Services\BankStatsService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Laravel\Fortify\Features;
 
 class LandingPageController extends Controller
 {
@@ -23,7 +22,7 @@ class LandingPageController extends Controller
     public function __invoke(Request $request): Response
     {
         return Inertia::render('welcome', [
-            'canRegister' => Features::enabled(Features::registration()),
+            'canRegister' => true,
             'stats' => $this->stats->getGlobalStats(),
         ]);
     }

@@ -1,0 +1,14 @@
+.git
+.podman_data
+.gemini
+node_modules
+vendor
+storage/logs
+oracle-client.zip
+oracle-sdk.zip
+instantclient-linux.zip
+php83.apk
+libcrypto3.apk
+libssl3.apk
+database/database.sqlite
+.env.oracle

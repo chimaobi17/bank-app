@@ -8,13 +8,24 @@ use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Banking\AccountsPageController;
 use App\Http\Controllers\Banking\DashboardController;
 use App\Http\Controllers\Banking\LoansPageController;
+use App\Http\Controllers\Banking\CardsPageController;
+use App\Http\Controllers\Banking\InterbankPageController;
 use App\Http\Controllers\Banking\NotificationsPageController;
+use App\Http\Controllers\Banking\OnboardingController;
+use App\Http\Controllers\Banking\PasskeysPageController;
 use App\Http\Controllers\Banking\PaymentsPageController;
+use App\Http\Controllers\Banking\StatementsController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Banking\TransfersPageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingPageController;
 
 Route::get('/', LandingPageController::class)->name('home');
+
+Route::middleware('guest')->group(function () {
+    Route::get('register', [RegisterController::class, 'create'])->name('register');
+    Route::post('register', [RegisterController::class, 'store'])->name('register.store');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
@@ -28,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('transfers', [TransfersPageController::class, 'create'])->name('transfers');
         Route::post('transfers', [TransfersPageController::class, 'store'])
-            ->middleware('mfa')
+            ->middleware(['mfa', 'financial_throttle:transfer'])
             ->name('transfers.store');
 
         Route::get('loans', [LoansPageController::class, 'index'])->name('loans');
@@ -38,12 +49,47 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('loans/calculate-emi', [LoansPageController::class, 'calculateEmi'])->name('loans.calculate');
 
         Route::get('payments', [PaymentsPageController::class, 'index'])->name('payments');
-        Route::post('payments/bill', [PaymentsPageController::class, 'payBill'])->name('payments.bill');
-        Route::post('payments/airtime', [PaymentsPageController::class, 'payAirtime'])->name('payments.airtime');
+        Route::post('payments/bill', [PaymentsPageController::class, 'payBill'])
+            ->middleware('financial_throttle:payment')
+            ->name('payments.bill');
+        Route::post('payments/airtime', [PaymentsPageController::class, 'payAirtime'])
+            ->middleware('financial_throttle:payment')
+            ->name('payments.airtime');
 
         Route::get('notifications', [NotificationsPageController::class, 'index'])->name('notifications');
         Route::post('notifications/{id}/read', [NotificationsPageController::class, 'markAsRead'])->name('notifications.read');
         Route::post('notifications/read-all', [NotificationsPageController::class, 'markAllAsRead'])->name('notifications.read-all');
+
+        Route::get('onboarding', [OnboardingController::class, 'show'])->name('onboarding');
+        Route::post('onboarding/identity', [OnboardingController::class, 'submitIdentity'])->name('onboarding.identity');
+        Route::post('onboarding/address', [OnboardingController::class, 'submitAddressProof'])->name('onboarding.address');
+
+        Route::get('cards', [CardsPageController::class, 'index'])->name('cards');
+        Route::get('cards/{card}', [CardsPageController::class, 'show'])->name('cards.show');
+        Route::post('cards/virtual', [CardsPageController::class, 'issueVirtual'])->name('cards.virtual');
+        Route::post('cards/{card}/pin', [CardsPageController::class, 'setPin'])->name('cards.pin');
+        Route::post('cards/{card}/limits', [CardsPageController::class, 'setLimits'])->name('cards.limits');
+        Route::post('cards/{card}/freeze', [CardsPageController::class, 'freeze'])->name('cards.freeze');
+        Route::post('cards/{card}/unfreeze', [CardsPageController::class, 'unfreeze'])->name('cards.unfreeze');
+        Route::post('cards/{card}/replace', [CardsPageController::class, 'requestReplacement'])->name('cards.replace');
+
+        Route::get('statements/{account}', [StatementsController::class, 'view'])->name('statements');
+        Route::get('statements/{account}/csv', [StatementsController::class, 'csv'])->name('statements.csv');
+
+        // Interbank transfers (Phase 14)
+        Route::get('interbank', [InterbankPageController::class, 'create'])->name('interbank');
+        Route::post('interbank/name-enquiry', [InterbankPageController::class, 'nameEnquiry'])->name('interbank.enquiry');
+        Route::post('interbank', [InterbankPageController::class, 'store'])
+            ->middleware(['mfa', 'financial_throttle:interbank'])
+            ->name('interbank.store');
+
+        // Passkey / WebAuthn management (Phase 14)
+        Route::get('security/passkeys', [PasskeysPageController::class, 'index'])->name('passkeys');
+        Route::post('security/passkeys/register', [PasskeysPageController::class, 'beginRegistration'])->name('passkeys.register');
+        Route::post('security/passkeys/register/complete', [PasskeysPageController::class, 'completeRegistration'])->name('passkeys.register.complete');
+        Route::post('security/passkeys/authenticate', [PasskeysPageController::class, 'beginAuthentication'])->name('passkeys.authenticate');
+        Route::post('security/passkeys/verify', [PasskeysPageController::class, 'verifyAssertion'])->name('passkeys.verify');
+        Route::post('security/passkeys/{credentialId}/revoke', [PasskeysPageController::class, 'revoke'])->name('passkeys.revoke');
     });
 
     Route::prefix('admin')->name('admin.')

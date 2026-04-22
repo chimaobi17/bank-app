@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { dashboard, login, register } from '@/routes';
-import { 
-    Shield, 
-    ArrowRightLeft, 
-    Landmark, 
-    Bell, 
-    PieChart, 
-    Database, 
-    Lock, 
+import {
+    Shield,
+    ArrowRightLeft,
+    Landmark,
+    Bell,
+    PieChart,
+    Database,
+    Lock,
     Globe,
     User,
     LogOut,
@@ -23,7 +23,7 @@ export default function Landing() {
     return (
         <div className="min-h-screen bg-[#050505] text-slate-200 selection:bg-amber-500/30 selection:text-amber-200">
             <Head title="Premium Banking" />
-            
+
             {/* Background Effects */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -top-[25%] -left-[10%] w-[70%] h-[70%] rounded-full bg-blue-600/10 blur-[120px]" />
@@ -117,7 +117,7 @@ export default function Landing() {
                             </span>
                         </h1>
                         <p className="mt-8 text-lg text-slate-400 sm:text-xl max-w-2xl mx-auto leading-relaxed">
-                            Experience institutional-grade security with an Oracle 21c core. 
+                            Experience institutional-grade security with an Oracle 21c core.
                             Seamless transfers, automated loans, and real-time intelligence.
                         </p>
                         <div className="flex flex-col items-center justify-center gap-4 mt-12 sm:flex-row">
@@ -134,23 +134,23 @@ export default function Landing() {
                 {/* Features Grid */}
                 <section className="px-6 py-24 mx-auto max-w-7xl lg:px-12 border-t border-slate-900">
                     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                        <FeatureCard 
-                            icon={<ArrowRightLeft className="w-6 h-6" />} 
+                        <FeatureCard
+                            icon={<ArrowRightLeft className="w-6 h-6" />}
                             title="Instant Transfers"
                             description="Move capital globally within seconds using our proprietary ledger engine."
                         />
-                        <FeatureCard 
-                            icon={<PieChart className="w-6 h-6" />} 
+                        <FeatureCard
+                            icon={<PieChart className="w-6 h-6" />}
                             title="Automated Loans"
                             description="Algorithmic credit assessment providing instant liquidity when you need it."
                         />
-                        <FeatureCard 
-                            icon={<Database className="w-6 h-6" />} 
+                        <FeatureCard
+                            icon={<Database className="w-6 h-6" />}
                             title="Oracle Core"
                             description="Built on Oracle 21c for unparalleled data integrity and high availability."
                         />
-                        <FeatureCard 
-                            icon={<Lock className="w-6 h-6" />} 
+                        <FeatureCard
+                            icon={<Lock className="w-6 h-6" />}
                             title="Ironclad Security"
                             description="Multi-factor authentication and AES-256 encryption at every layer."
                         />

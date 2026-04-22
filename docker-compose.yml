@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  php-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bank-app-php
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - /app/vendor
+    environment:
+      - DB_CONNECTION=oracle
+      - DB_HOST=host.docker.internal
+      - DB_PORT=1521
+      - DB_DATABASE=xe
+      - DB_SERVICE_NAME=xe
+      - DB_USERNAME=bank
+      - DB_PASSWORD=secret
+    networks:
+      - bank-network
+
+networks:
+  bank-network:
+    driver: bridge
