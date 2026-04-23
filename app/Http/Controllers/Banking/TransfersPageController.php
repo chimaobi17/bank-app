@@ -55,6 +55,6 @@ class TransfersPageController extends Controller
             return back()->withErrors(['amount' => $e->getMessage()]);
         }
 
-        return redirect()->back()->with('success', "Transfer of ₦" . number_format($validated['amount'], 2) . " to " . $validated['to_account_number'] . " was successful.");
+        return redirect()->route('banking.dashboard')->with('success', "Transfer of ₦" . number_format($validated['amount'], 2) . " to " . $validated['to_account_number'] . " was successful.");
     }
 }

@@ -10,6 +10,7 @@ final class TransactionProcessor
 {
     public function __construct(
         private readonly LedgerService $ledger,
+        private readonly \App\Contracts\Repositories\TransactionRepositoryContract $transactions,
     ) {}
 
     public function process(Transaction $transaction): TransactionResult
@@ -19,6 +20,9 @@ final class TransactionProcessor
              * Concurrency Control (Section 13)
              * Lock account records for update to prevent race conditions during balance modification.
              */
+            $source = null;
+            $destination = null;
+
             if ($transaction instanceof AbstractTransaction) {
                 if ($source = $transaction->source()) {
                     $source->model()->lockForUpdate()->find($source->model()->account_id);
@@ -32,6 +36,14 @@ final class TransactionProcessor
 
             try {
                 $result = $transaction->execute();
+                
+                // Persistence Orchestration: Atomically commit Domain state changes
+                if ($source) $source->model()->save();
+                if ($destination) $destination->model()->save();
+
+                // Save the Transaction record itself
+                $result->transaction->save();
+
                 $this->postLedger($transaction, $result);
                 $result->transaction->markCompleted();
 

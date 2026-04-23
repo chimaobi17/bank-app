@@ -37,6 +37,20 @@ final class SpendAnalysisService
                 '0.0000',
             ))->toArray();
 
+        $now = CarbonImmutable::now();
+        $todayStart = $now->startOfDay();
+        $weekStart = $now->startOfWeek();
+        $monthStart = $now->startOfMonth();
+
+        $spentToday = $debits->filter(fn($t) => $t->posted_at >= $todayStart)
+            ->reduce(fn ($c, $t) => bcadd($c, (string) $t->amount, 4), '0.0000');
+        
+        $spentWeek = $debits->filter(fn($t) => $t->posted_at >= $weekStart)
+            ->reduce(fn ($c, $t) => bcadd($c, (string) $t->amount, 4), '0.0000');
+
+        $spentMonth = $debits->filter(fn($t) => $t->posted_at >= $monthStart)
+            ->reduce(fn ($c, $t) => bcadd($c, (string) $t->amount, 4), '0.0000');
+
         return [
             'period' => [
                 'start' => $start->toIso8601String(),
@@ -44,6 +58,9 @@ final class SpendAnalysisService
             ],
             'total_spent' => $totalSpent,
             'total_received' => $totalReceived,
+            'spent_today' => $spentToday,
+            'spent_week' => $spentWeek,
+            'spent_month' => $spentMonth,
             'net_flow' => bcsub($totalReceived, $totalSpent, 4),
             'spending_by_type' => $byType,
             'transaction_count' => $debits->count() + $credits->count(),

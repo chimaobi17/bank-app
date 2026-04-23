@@ -46,7 +46,7 @@ final class BillPaymentService
                 customerReference: $data['recipient_identifier'] ?? '',
                 initiatedBy: $data['initiated_by'] ?? auth()->id(),
                 narration: $data['narration'] ?? null,
-                channel: $data['channel'] ?? null,
+                channel: $data['channel'] ?? 'mobile-app',
             );
 
             $result = $this->processor->process($transaction);

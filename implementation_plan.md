@@ -291,23 +291,50 @@ Recreate the high-fidelity, premium mobile banking interface based on the refere
 
 ---
 
-## Phase 19: Real-Time Banking Experience
-Enhance the user experience with immediate feedback and reactive data updates.
+## Phase 20: Stability & Oracle Optimization
+**Goal:** Address persistent OCI8/Oracle driver limitations regarding CLOB handling and atomic balance commits to ensure 100% reliability in financial state transitions, following pure OOP paradigms.
 
-### 19.1 Reactive Balances & History
-- [ ] **Instant Balance Reduction**: Ensure that when a user transfers money, the displayed account balance updates immediately to reflect the reduction.
-- [ ] **Real-Time Transaction History**: Automatically update the transaction history feed in real-time after a successful transfer to show the new entry.
-- [ ] **Seamless UX**: Implement state synchronization across the React frontend to provide a "live" banking experience without manual refreshes.
+- [x] **OCI8 CLOB Persistence Fix**:
+  - Standardize `TransactionRepository` to handle Oracle-specific CLOB binding issues using explicit attribute setting and sequence-safe `save()` methods, avoiding `ORA-00932`.
+- [/] **Domain Layer Refinement**:
+  - Tighten encapsulation in `Domain/Account` to ensure atomic balance updates (Balance + Available Balance) are inseparable.
+  - Refactor `TransferTransaction` to utilize the improved `TransactionRepository` for persistence, decoupling Domain logic from Eloquent quirks.
+- [ ] **Reactive UI Synchronization**:
+  - Implement a Global Toast provider in `DashboardLayout` to ensure 100% visibility of transfer success/failure.
+  - Optimize the Dashboard's "Spent Today" tracker to refresh instantly via Inertia partial reloads.
 
 ---
+
+## Phase 21: Bill Payment Stability & Balance Reduction
+**Goal:** Resolve the `ORA-01400` error blocking bill payments due to null `CHANNEL` values and ensure immediate balance deduction from the main account.
+
+- [ ] **Transaction Channel Enforcement**:
+    - [ ] Update `BillPaymentService.php` to provide a default `'web'` or `'mobile'` channel if not explicitly passed in the request data, preventing null insertion into the `TRANSACTIONS` table.
+    - [ ] Update `BillPaymentTransaction.php` domain entity to enforce a non-null channel value during construction or execution.
+- [ ] **Atomic Balance Reduction**:
+    - [ ] Verify `BillPaymentTransaction::execute()` correctly calls `withdraw()` on the source account and persists the change to the `ACCOUNTS` table within the same database transaction.
+    - [ ] Ensure the selected "Source Account" in the UI correctly maps to the user's primary/main account for bill payments.
+- [ ] **Validation & Logging**:
+    - [ ] Add explicit validation to ensure the source account has sufficient funds before initiating the bill payment external request.
+
+---
+
+## Phase 22: Card Security & Token Length
+**Goal:** Fix ORA-12899 error by increasing the storage capacity for encrypted sensitive tokens (PAN, Phone).
+
+- [x] **Column Length Expansion**:
+    - [x] Created migration to increase `pan_token` in `CARDS` to 1024.
+    - [x] Increased `phone` in `CUSTOMERS` and `USERS` to 1024 to accommodate long encrypted strings.
+- [x] **Verification**:
+    - [x] Applied migration to Oracle 21c and verified `DATA_LENGTH` via Tinker.
 
 ## Verification Plan
 
 ### Automated Tests
-- `php artisan test` (Pest)
-- `npx playwright test` (E2E)
+- `php artisan test` (Focus on `TransferServiceTest`)
+- `npx playwright test` (Verify balance reduction flow)
 
 ### Manual Verification
-- Verify Oracle table row counts after migrations and seeding.
-- Test MFA flow in the React frontend.
-- Audit ledger entries after a cross-account transfer.
+- Execute internal transfer and verify `ACCOUNTS` table `BALANCE` column via Tinker.
+- Audit `LEDGER_ENTRIES` to ensure double-entry integrity (DR/CR equality).
+- Verify mobile responsiveness on simulated iOS Safari.

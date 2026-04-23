@@ -18,7 +18,7 @@ final readonly class BillPaymentTransaction extends AbstractTransaction
         private string $customerReference,
         ?int $initiatedBy = null,
         ?string $narration = null,
-        ?string $channel = null,
+        ?string $channel = 'mobile-app',
         array $metadata = [],
     ) {
         parent::__construct(

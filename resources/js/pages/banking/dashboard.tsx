@@ -410,13 +410,30 @@ export default function BankingDashboard({
                     </div>
 
                     {/* Summary pills */}
+                    {/* Money Spent Tracking */}
+                    <div className="grid grid-cols-3 lg:grid-cols-3 gap-2 lg:gap-3">
+                        <div className="flex flex-col gap-1 rounded-[1.5rem] border border-border bg-card/60 p-4">
+                            <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Spent Today</span>
+                            <span className="text-sm font-black text-foreground">{fmt(spendAnalytics?.spent_today ?? '0')}</span>
+                        </div>
+                        <div className="flex flex-col gap-1 rounded-[1.5rem] border border-border bg-card/60 p-4">
+                            <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Spent This Week</span>
+                            <span className="text-sm font-black text-foreground">{fmt(spendAnalytics?.spent_week ?? '0')}</span>
+                        </div>
+                        <div className="flex flex-col gap-1 rounded-[1.5rem] border border-border bg-card/60 p-4">
+                            <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Spent This Month</span>
+                            <span className="text-sm font-black text-foreground">{fmt(spendAnalytics?.spent_month ?? '0')}</span>
+                        </div>
+                    </div>
+
+                    {/* Summary pills */}
                     <div className="grid grid-cols-3 lg:grid-cols-3 gap-2 lg:gap-3">
                         <div className="flex flex-col gap-1 rounded-[1.5rem] border border-emerald-500/20 bg-emerald-500/[0.04] p-4">
                             <span className="text-[9px] font-black uppercase tracking-widest text-emerald-400/60">Income</span>
                             <span className="text-sm font-black text-emerald-400">{fmt(spendAnalytics?.total_received ?? '0')}</span>
                         </div>
                         <div className="flex flex-col gap-1 rounded-[1.5rem] border border-red-500/20 bg-red-500/[0.04] p-4">
-                            <span className="text-[9px] font-black uppercase tracking-widest text-red-400/60">Spent</span>
+                            <span className="text-[9px] font-black uppercase tracking-widest text-red-400/60">Total Spent</span>
                             <span className="text-sm font-black text-red-400">{fmt(spendAnalytics?.total_spent ?? '0')}</span>
                         </div>
                         <div className="flex flex-col gap-1 rounded-[1.5rem] border border-primary/20 bg-primary/[0.04] p-4">

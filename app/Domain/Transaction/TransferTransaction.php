@@ -55,22 +55,19 @@ final readonly class TransferTransaction extends AbstractTransaction implements 
         $this->source->withdraw($this->amount);
         $this->destination->deposit($this->amount);
 
-        $this->source->model()->save();
-        $this->destination->model()->save();
-
-        $model = TransactionModel::create([
-            'type' => $this->type(),
-            'amount' => $this->amount->getAmount(),
-            'currency' => $this->amount->getCurrency(),
-            'source_account_id' => $this->source->model()->account_id,
-            'dest_account_id' => $this->destination->model()->account_id,
-            'status' => TransactionStatus::PENDING,
-            'narration' => $this->narration,
-            'channel' => $this->channel,
-            'initiated_by' => $this->initiatedBy,
-            'is_reversible' => true,
-            'metadata' => $this->metadata,
-        ]);
+        $model = new TransactionModel();
+        $model->type = $this->type();
+        $model->amount = $this->amount->getAmount();
+        $model->currency = $this->amount->getCurrency();
+        $model->source_account_id = $this->source->model()->account_id;
+        $model->dest_account_id = $this->destination->model()->account_id;
+        $model->status = TransactionStatus::PENDING;
+        $model->narration = $this->narration ?: 'Transfer';
+        $model->channel = $this->channel ?: 'web';
+        $model->initiated_by = $this->initiatedBy;
+        $model->is_reversible = true;
+        $model->metadata = $this->metadata ?: [];
+        // Note: Reference is generated in booted()
 
         return TransactionResult::success($model, $this->amount);
     }

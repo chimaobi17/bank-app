@@ -49,6 +49,7 @@ class DashboardController extends Controller
                 ->orWhereIn('dest_account_id', $accounts->pluck('account_id'))
                 ->with('sourceAccount', 'destinationAccount')
                 ->latest('posted_at')
+                ->latest('transaction_id')
                 ->take(5)
                 ->get()
             : collect();
@@ -120,6 +121,7 @@ class DashboardController extends Controller
         // Aggregate across all accounts
         $merged = [
             'total_spent' => '0', 'total_received' => '0',
+            'spent_today' => '0', 'spent_week' => '0', 'spent_month' => '0',
             'spending_by_type' => [], 'transaction_count' => 0,
         ];
 
@@ -127,6 +129,9 @@ class DashboardController extends Controller
             $summary = $this->spendAnalysis->summarize($account, $range);
             $merged['total_spent'] = bcadd($merged['total_spent'], $summary['total_spent'], 4);
             $merged['total_received'] = bcadd($merged['total_received'], $summary['total_received'], 4);
+            $merged['spent_today'] = bcadd($merged['spent_today'], $summary['spent_today'] ?? '0', 4);
+            $merged['spent_week'] = bcadd($merged['spent_week'], $summary['spent_week'] ?? '0', 4);
+            $merged['spent_month'] = bcadd($merged['spent_month'], $summary['spent_month'] ?? '0', 4);
             $merged['transaction_count'] += $summary['transaction_count'];
             foreach ($summary['spending_by_type'] as $type => $amt) {
                 $merged['spending_by_type'][$type] = bcadd($merged['spending_by_type'][$type] ?? '0', $amt, 4);
