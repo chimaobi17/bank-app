@@ -156,12 +156,4 @@ store.form = storeForm
 
 const NewPasswordController = { create, store }
 
-export default NewPasswordControllerurl(options),
-    method: 'post',
-})
-
-store.form = storeForm
-
-const NewPasswordController = { create, store }
-
 export default NewPasswordController

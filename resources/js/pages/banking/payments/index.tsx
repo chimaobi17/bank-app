@@ -85,7 +85,7 @@ export default function PaymentsIndex({ payments, accounts, billers }: Props) {
         <DashboardLayout>
             <Head title="Payments & Bills" />
             
-            <div className="flex flex-col gap-6 px-6 pt-10 pb-10">
+            <div className="flex flex-col gap-6 px-5 pt-10 pb-10 sm:px-6 lg:px-8 xl:px-0">
                 {/* Header */}
                 <header className="flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-700">
                     <Link href="/banking/dashboard" className="flex h-10 w-10 items-center justify-center rounded-2xl bg-card border border-border hover:bg-muted transition-all active:scale-90">
@@ -95,7 +95,7 @@ export default function PaymentsIndex({ payments, accounts, billers }: Props) {
                 </header>
 
                 {/* Quick Categories */}
-                <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar -mx-6 px-6 animate-in fade-in slide-in-from-right-4 duration-700">
+                <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar -mx-5 px-5 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 animate-in fade-in slide-in-from-right-4 duration-700">
                     {categories.map((cat) => (
                         <button
                             key={cat.id}
@@ -116,6 +116,9 @@ export default function PaymentsIndex({ payments, accounts, billers }: Props) {
                         </button>
                     ))}
                 </div>
+
+                {/* Desktop: side-by-side form + history */}
+                <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-8">
 
                 <div className="glass-card rounded-[2.5rem] p-6 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border border-border">
                     <form onSubmit={submit} className="space-y-6">
@@ -209,7 +212,7 @@ export default function PaymentsIndex({ payments, accounts, billers }: Props) {
                 </div>
 
                 {/* History */}
-                <div className="mt-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+                <div className="mt-4 lg:mt-0 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
                     <h3 className="text-lg font-black tracking-tight text-foreground mb-4">Recent Payments</h3>
                     <div className="flex flex-col gap-3">
                         {payments.length === 0 && (
@@ -241,6 +244,8 @@ export default function PaymentsIndex({ payments, accounts, billers }: Props) {
                         ))}
                     </div>
                 </div>
+
+                </div> {/* End desktop two column */}
             </div>
         </DashboardLayout>
     );

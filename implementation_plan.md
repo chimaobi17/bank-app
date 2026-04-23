@@ -277,6 +277,30 @@ Recreate the high-fidelity, premium mobile banking interface based on the refere
 
 ---
 
+## Phase 18: Responsive Design (Mobile & Desktop)
+**Goal:** Ensure the high-fidelity UI scales gracefully from mobile to large desktop screens, eliminating the rigid `max-w-md` constraints on larger viewports.
+
+- [x] **Layout Architecture:**
+  - Update `DashboardLayout` to utilize flexible constraints (`max-w-md` on mobile, expanding to `max-w-4xl` or `max-w-6xl` on desktop).
+  - Convert bottom navigation to a sticky side navigation bar on desktop viewports.
+- [x] **Dashboard Refactoring:**
+  - Transition single-column grids (Actions, Accounts, Savings Goals) into responsive multi-column layouts using Tailwind breakpoints (e.g., `grid-cols-2md:grid-cols-4`).
+- [x] **Nested Views Optimization:**
+  - Ensure complex views like `statements/index.tsx` scale charts horizontally and use available space for data tables.
+  - Center and scale forms (e.g., Transfers, Payments) cleanly on large screens without losing the glassmorphism premium feel.
+
+---
+
+## Phase 19: Real-Time Banking Experience
+Enhance the user experience with immediate feedback and reactive data updates.
+
+### 19.1 Reactive Balances & History
+- [ ] **Instant Balance Reduction**: Ensure that when a user transfers money, the displayed account balance updates immediately to reflect the reduction.
+- [ ] **Real-Time Transaction History**: Automatically update the transaction history feed in real-time after a successful transfer to show the new entry.
+- [ ] **Seamless UX**: Implement state synchronization across the React frontend to provide a "live" banking experience without manual refreshes.
+
+---
+
 ## Verification Plan
 
 ### Automated Tests

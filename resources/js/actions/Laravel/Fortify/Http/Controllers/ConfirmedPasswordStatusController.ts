@@ -1,6 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
-ollers/ConfirmedPasswordStatusController.php:17
+/**
+* @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::show
+* @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
 * @route '/user/confirmed-password-status'
 */
 export const show = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({

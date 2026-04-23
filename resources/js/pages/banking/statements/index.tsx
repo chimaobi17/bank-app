@@ -127,7 +127,7 @@ export default function StatementsIndex({ statement, analytics, filters }: Props
         <DashboardLayout>
             <Head title={`Statement · ${statement.account.account_number}`} />
 
-            <div className="flex flex-col gap-6 px-6 pt-10 pb-10">
+            <div className="flex flex-col gap-6 px-5 pt-10 pb-10 sm:px-6 lg:px-8 xl:px-0">
                 {/* Back */}
                 <Link
                     href="/banking/accounts"
@@ -191,7 +191,7 @@ export default function StatementsIndex({ statement, analytics, filters }: Props
                 </section>
 
                 {/* Summary cards */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                     <SummaryCard
                         label="Income"
                         value={fmt(analytics.total_received)}
@@ -222,7 +222,7 @@ export default function StatementsIndex({ statement, analytics, filters }: Props
                 {lineData.length > 1 && (
                     <section className="flex flex-col gap-3 rounded-[2rem] border border-white/5 bg-white/[0.02] p-5">
                         <h3 className="text-sm font-black text-white">Balance Trend</h3>
-                        <div className="h-48">
+                        <div className="h-48 lg:h-64">
                             <ResponsiveContainer width="100%" height="100%">
                                 <AreaChart data={lineData}>
                                     <defs>
@@ -274,8 +274,8 @@ export default function StatementsIndex({ statement, analytics, filters }: Props
                 {pieData.length > 0 && (
                     <section className="flex flex-col gap-3 rounded-[2rem] border border-white/5 bg-white/[0.02] p-5">
                         <h3 className="text-sm font-black text-white">Spending Breakdown</h3>
-                        <div className="flex items-center gap-4">
-                            <div className="h-32 w-32 flex-shrink-0">
+                        <div className="flex flex-col sm:flex-row items-center gap-4 lg:gap-8">
+                            <div className="h-32 w-32 lg:h-48 lg:w-48 flex-shrink-0">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <PieChart>
                                         <Pie
@@ -295,7 +295,7 @@ export default function StatementsIndex({ statement, analytics, filters }: Props
                                     </PieChart>
                                 </ResponsiveContainer>
                             </div>
-                            <ul className="flex flex-col gap-2">
+                            <ul className="flex flex-col gap-2 lg:gap-3">
                                 {pieData.map((d, i) => (
                                     <li key={d.name} className="flex items-center gap-2">
                                         <span
@@ -354,7 +354,7 @@ export default function StatementsIndex({ statement, analytics, filters }: Props
                                             )}
                                         </div>
                                         <div className="flex flex-col gap-0.5 text-left">
-                                            <p className="max-w-[140px] truncate text-xs font-bold text-white">
+                                            <p className="max-w-[140px] lg:max-w-[300px] truncate text-xs font-bold text-white">
                                                 {tx.narration || tx.type || tx.reference}
                                             </p>
                                             <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600">

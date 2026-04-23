@@ -108,7 +108,7 @@ export default function InterbankTransfer({ accounts, banks, flash }: Props) {
         <DashboardLayout>
             <Head title="Interbank Transfer" />
 
-            <div className="flex flex-col gap-6 px-6 pt-10 pb-10">
+            <div className="flex flex-col gap-6 px-5 pt-10 pb-10 sm:px-6 lg:px-8 xl:px-0 lg:max-w-2xl lg:mx-auto lg:w-full">
                 {/* Back */}
                 <button
                     onClick={() => router.visit('/banking/transfers')}

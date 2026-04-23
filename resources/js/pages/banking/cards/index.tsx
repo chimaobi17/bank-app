@@ -52,7 +52,7 @@ export default function CardsIndex({ cards, accounts, flash }: Props) {
         <DashboardLayout>
             <Head title="Cards" />
 
-            <div className="flex flex-col gap-6 px-6 pt-10 pb-10">
+            <div className="flex flex-col gap-6 px-5 pt-10 pb-10 sm:px-6 lg:px-8 xl:px-0">
                 <header className="flex items-center justify-between">
                     <div>
                         <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Wallet</p>
@@ -75,7 +75,7 @@ export default function CardsIndex({ cards, accounts, flash }: Props) {
                 {showIssuer && (
                     <form
                         onSubmit={submit}
-                        className="flex flex-col gap-3 rounded-[2rem] border border-border bg-card/50 p-5"
+                        className="flex flex-col gap-3 rounded-[2rem] border border-border bg-card/50 p-5 lg:max-w-2xl lg:mx-auto lg:w-full"
                     >
                         <h3 className="text-sm font-black text-foreground">Issue a Virtual Card</h3>
 
@@ -126,7 +126,7 @@ export default function CardsIndex({ cards, accounts, flash }: Props) {
                 {cards.length === 0 ? (
                     <EmptyState />
                 ) : (
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-6">
                         {cards.map((c) => (
                             <CardTile key={c.card_id} card={c} />
                         ))}

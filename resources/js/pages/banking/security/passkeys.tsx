@@ -174,7 +174,7 @@ export default function PasskeysPage({ passkeys, flash }: Props) {
         <DashboardLayout>
             <Head title="Passkeys" />
 
-            <div className="flex flex-col gap-6 px-6 pt-10 pb-10">
+            <div className="flex flex-col gap-6 px-5 pt-10 pb-10 sm:px-6 lg:px-8 xl:px-0 lg:max-w-3xl lg:mx-auto lg:w-full">
                 <button
                     onClick={() => router.visit('/banking/dashboard')}
                     className="flex items-center gap-2 self-start text-xs font-black uppercase tracking-widest text-gray-500 hover:text-white"

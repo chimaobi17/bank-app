@@ -57,12 +57,4 @@ store.form = storeForm
 
 const TransferController = { store }
 
-export default TransferControllerrl(options),
-    method: 'post',
-})
-
-store.form = storeForm
-
-const TransferController = { store }
-
 export default TransferController

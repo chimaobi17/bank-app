@@ -153,10 +153,10 @@ export default function BankingDashboard({
         <DashboardLayout>
             <Head title="Dashboard — ApexBank" />
 
-            <div className="flex flex-col gap-8 px-6 pt-10 pb-10">
+            <div className="flex flex-col gap-8 px-5 pt-10 pb-10 sm:px-6 lg:px-8 xl:px-0">
 
                 {/* ═══════════ 1. Profile Header ═══════════ */}
-                <header className="flex items-center justify-between animate-in fade-in slide-in-from-top-4 duration-700">
+                <header className="flex items-center justify-between animate-in fade-in slide-in-from-top-4 duration-700 lg:mt-4">
                     <div className="flex items-center gap-3">
                         <div className="animate-pulse-glow flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-purple-800 text-lg font-black text-primary-foreground shadow-[0_8px_20px_rgba(124,58,237,0.3)] border border-primary/20 ring-1 ring-primary/10">
                             {user.name?.[0] || 'U'}
@@ -193,7 +193,7 @@ export default function BankingDashboard({
                 </header>
 
                 {/* ═══════════ 2. Premium Balance Card ═══════════ */}
-                <section className="relative overflow-hidden rounded-[2.5rem] bg-premium-gradient p-8 shadow-[0_20px_50px_rgba(124,58,237,0.25)] animate-in zoom-in-95 duration-700 delay-100 group">
+                <section className="relative overflow-hidden rounded-[2.5rem] bg-premium-gradient p-6 sm:p-8 lg:p-10 shadow-[0_20px_50px_rgba(124,58,237,0.25)] animate-in zoom-in-95 duration-700 delay-100 group">
                     {/* Animated orbs */}
                     <div className="animate-shimmer absolute -right-12 -top-12 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
                     <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-purple-900/40 blur-2xl" />
@@ -215,7 +215,7 @@ export default function BankingDashboard({
                         </div>
 
                         <div className="flex flex-col gap-2">
-                            <h1 className="text-5xl font-black tracking-tighter text-white transition-all duration-500">
+                            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-white transition-all duration-500">
                                 {showBalance ? fmt(totalBalance) : '••••••••'}
                             </h1>
                             <div className="flex items-center gap-2">
@@ -246,14 +246,14 @@ export default function BankingDashboard({
                 </section>
 
                 {/* ═══════════ 3. Action Grid ═══════════ */}
-                <section className="grid grid-cols-4 gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+                <section className="grid grid-cols-4 lg:grid-cols-4 gap-3 lg:gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
                     {actions.map((action) => (
                         <Link
                             key={action.name}
                             href={action.href}
                             className="group flex flex-col items-center gap-3 active:scale-90 transition-all"
                         >
-                            <div className={`flex h-16 w-16 items-center justify-center rounded-[1.4rem] bg-gradient-to-b ${action.color} border border-border bg-card/50 shadow-sm transition-all duration-300 group-hover:border-primary/20 group-hover:-translate-y-1`}>
+                            <div className={`flex h-14 w-14 sm:h-16 sm:w-16 lg:h-18 lg:w-18 items-center justify-center rounded-[1.4rem] bg-gradient-to-b ${action.color} border border-border bg-card/50 shadow-sm transition-all duration-300 group-hover:border-primary/20 group-hover:-translate-y-1`}>
                                 <action.icon size={24} className={`${action.text} transition-transform group-hover:scale-110`} />
                             </div>
                             <span className="text-[10px] font-bold text-muted-foreground text-center tracking-tight group-hover:text-foreground transition-colors">
@@ -264,6 +264,9 @@ export default function BankingDashboard({
                 </section>
 
                 {/* ═══════════ 4. Accounts List ═══════════ */}
+                {/* ═══════════ Desktop Two-Column Layout ═══════════ */}
+                <div className="flex flex-col lg:grid lg:grid-cols-2 lg:gap-8">
+
                 <section className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-225">
                     <div className="flex items-center justify-between">
                         <h3 className="text-lg font-black tracking-tight text-foreground">My Accounts</h3>
@@ -309,6 +312,9 @@ export default function BankingDashboard({
                     </div>
                 </section>
 
+                {/* ═══════════ 4b. Cards + Savings (right column on desktop) ═══════════ */}
+                <div className="flex flex-col gap-8 mt-8 lg:mt-0">
+
                 {/* ═══════════ 4. My Cards Carousel ═══════════ */}
                 {cards && cards.length > 0 && (
                     <section className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-250">
@@ -318,11 +324,11 @@ export default function BankingDashboard({
                                 Manage
                             </Link>
                         </div>
-                        <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar -mx-6 px-6">
+                        <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar -mx-5 px-5 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 lg:flex-wrap">
                             {cards.map((card, i) => (
                                 <div
                                     key={i}
-                                    className={`flex-none w-[280px] h-[160px] rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden transition-transform hover:scale-[1.02] active:scale-95 shadow-xl ${card.type === 'Virtual'
+                                    className={`flex-none w-[280px] lg:w-full h-[160px] rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden transition-transform hover:scale-[1.02] active:scale-95 shadow-xl ${card.type === 'Virtual'
                                             ? 'bg-gradient-to-br from-neutral-800 to-neutral-950 border border-white/10'
                                             : 'bg-gradient-to-br from-purple-600 to-indigo-900 border border-white/20 shadow-purple-500/20'
                                         }`}
@@ -360,7 +366,7 @@ export default function BankingDashboard({
                             <h3 className="text-lg font-black tracking-tight text-foreground">Savings Goals</h3>
                             <button className="text-[11px] font-black uppercase tracking-widest text-primary hover:text-primary/80 transition-colors">New Goal</button>
                         </div>
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 lg:grid lg:grid-cols-1 xl:grid-cols-1">
                             {savingsGoals.map((goal, i) => {
                                 const pct = Math.round((goal.current / goal.target) * 100);
                                 return (
@@ -391,6 +397,9 @@ export default function BankingDashboard({
                     </section>
                 )}
 
+                </div> {/* End right column */}
+                </div> {/* End two-column layout */}
+
                 {/* ═══════════ 6. Spend Analytics ═══════════ */}
                 <section className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-350">
                     <div className="flex items-center justify-between">
@@ -401,7 +410,7 @@ export default function BankingDashboard({
                     </div>
 
                     {/* Summary pills */}
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-3 lg:grid-cols-3 gap-2 lg:gap-3">
                         <div className="flex flex-col gap-1 rounded-[1.5rem] border border-emerald-500/20 bg-emerald-500/[0.04] p-4">
                             <span className="text-[9px] font-black uppercase tracking-widest text-emerald-400/60">Income</span>
                             <span className="text-sm font-black text-emerald-400">{fmt(spendAnalytics?.total_received ?? '0')}</span>
@@ -422,7 +431,7 @@ export default function BankingDashboard({
                     {monthlyBreakdown && monthlyBreakdown.length > 0 && (
                         <div className="glass-card rounded-[2rem] p-5 border border-border bg-card/50">
                             <h4 className="mb-4 text-xs font-black text-foreground">Income vs Expenses</h4>
-                            <div className="h-44">
+                            <div className="h-44 lg:h-64">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={monthlyBreakdown} barGap={4}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
@@ -469,10 +478,10 @@ export default function BankingDashboard({
                     <div className="flex items-center justify-between">
                         <h3 className="text-lg font-black tracking-tight text-foreground">Digital Services</h3>
                     </div>
-                    <div className="grid grid-cols-5 gap-3">
+                    <div className="grid grid-cols-5 lg:grid-cols-5 gap-3 lg:gap-4">
                         {services.map((service) => (
                             <Link key={service.name} href={service.href} className="group flex flex-col items-center gap-3 active:scale-90 transition-all">
-                                <div className="flex h-16 w-16 items-center justify-center rounded-[1.4rem] bg-card border border-border shadow-sm transition-all duration-300 group-hover:bg-muted group-hover:border-primary/20 group-hover:-translate-y-1">
+                                <div className="flex h-14 w-14 sm:h-16 sm:w-16 lg:h-18 lg:w-18 items-center justify-center rounded-[1.4rem] bg-card border border-border shadow-sm transition-all duration-300 group-hover:bg-muted group-hover:border-primary/20 group-hover:-translate-y-1">
                                     <service.icon size={26} className={`${service.color} transition-transform group-hover:scale-110`} />
                                 </div>
                                 <span className="text-[10px] font-bold text-muted-foreground text-center tracking-tight group-hover:text-foreground transition-colors capitalize">
@@ -484,7 +493,7 @@ export default function BankingDashboard({
                 </section>
 
                 {/* ═══════════ 8. Premium Upgrade Banner ═══════════ */}
-                <section className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 rounded-[2.5rem] p-8 flex justify-between items-center animate-in zoom-in-95 duration-700 delay-500 group hover:border-amber-500/40 transition-all cursor-pointer bg-card">
+                <section className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 rounded-[2.5rem] p-6 sm:p-8 flex justify-between items-center animate-in zoom-in-95 duration-700 delay-500 group hover:border-amber-500/40 transition-all cursor-pointer bg-card">
                     <div className="flex flex-col gap-1 text-left">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-600 dark:text-amber-500">Premium Upgrade</p>
                         <h4 className="text-lg font-black text-foreground">Apex Platinum</h4>
@@ -522,7 +531,7 @@ export default function BankingDashboard({
                                             )}
                                         </div>
                                         <div className="flex flex-col gap-0.5 text-left">
-                                            <p className="max-w-[150px] truncate text-sm font-bold text-foreground group-hover:text-primary transition-colors">
+                                            <p className="max-w-[150px] lg:max-w-[300px] truncate text-sm font-bold text-foreground group-hover:text-primary transition-colors">
                                                 {tx.narration || tx.type}
                                             </p>
                                             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">

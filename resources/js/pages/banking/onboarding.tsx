@@ -59,7 +59,7 @@ export default function Onboarding({ user, customer, currentStep, steps, flash }
         <DashboardLayout>
             <Head title="KYC Onboarding" />
 
-            <div className="flex flex-col gap-8 px-6 pt-10 pb-10">
+            <div className="flex flex-col gap-8 px-5 pt-10 pb-10 sm:px-6 lg:px-8 xl:px-0 lg:max-w-3xl lg:mx-auto lg:w-full">
                 <header className="flex flex-col gap-2">
                     <p className="text-[11px] font-bold uppercase tracking-widest text-gray-500">
                         Account Verification

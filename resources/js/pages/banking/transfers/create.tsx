@@ -48,7 +48,7 @@ export default function TransferCreate({ accounts }: Props) {
     return (
         <DashboardLayout>
             <Head title="Transfer Money" />
-            <div className="flex flex-col gap-6 px-6 pt-10 pb-10">
+            <div className="flex flex-col gap-6 px-5 pt-10 pb-10 sm:px-6 lg:px-8 xl:px-0">
                 {/* Header */}
                 <header className="flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-700">
                     <Link href="/banking/dashboard" className="flex h-10 w-10 items-center justify-center rounded-2xl bg-card border border-border hover:bg-muted transition-all active:scale-90">
@@ -57,7 +57,7 @@ export default function TransferCreate({ accounts }: Props) {
                     <h1 className="text-2xl font-black tracking-tight text-foreground">Internal Transfer</h1>
                 </header>
 
-                <div className="glass-card rounded-[2.5rem] p-6 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border border-border">
+                <div className="glass-card rounded-[2.5rem] p-6 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 border border-border lg:max-w-2xl lg:mx-auto lg:w-full">
                     <form onSubmit={submit} className="space-y-6">
                         <div className="space-y-2">
                             <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Source Account</Label>

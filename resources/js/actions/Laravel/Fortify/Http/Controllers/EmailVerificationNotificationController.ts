@@ -1,6 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
-p/Controllers/EmailVerificationNotificationController.php:19
+/**
+* @see \Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController::store
+* @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationNotificationController.php:19
 * @route '/email/verification-notification'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({

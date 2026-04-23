@@ -40,7 +40,7 @@ export default function NotificationsIndex({ notifications }: Props) {
         <DashboardLayout>
             <Head title="Notifications" />
 
-            <div className="flex flex-col gap-6 px-6 pt-10 pb-10">
+            <div className="flex flex-col gap-6 px-5 pt-10 pb-10 sm:px-6 lg:px-8 xl:px-0 lg:max-w-4xl lg:mx-auto lg:w-full">
                 <header className="flex items-center justify-between animate-in fade-in slide-in-from-top-4 duration-700">
                     <div className="flex items-center gap-4">
                         <Link href="/banking/dashboard" className="flex h-10 w-10 items-center justify-center rounded-2xl bg-card border border-border hover:bg-muted transition-all active:scale-90">

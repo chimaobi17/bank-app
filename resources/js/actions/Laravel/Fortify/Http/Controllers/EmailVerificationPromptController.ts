@@ -1,6 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
-ontrollers/EmailVerificationPromptController.php:18
+/**
+* @see \Laravel\Fortify\Http\Controllers\EmailVerificationPromptController::__invoke
+* @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationPromptController.php:18
 * @route '/email/verify'
 */
 export const __invoke = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({

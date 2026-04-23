@@ -336,11 +336,4 @@ transactions.form = transactionsForm
 
 const AccountController = { index, store, show, transactions }
 
-export default AccountControllerhod: 'get',
-})
-
-transactions.form = transactionsForm
-
-const AccountController = { index, store, show, transactions }
-
 export default AccountController
