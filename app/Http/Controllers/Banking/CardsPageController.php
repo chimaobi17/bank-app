@@ -55,7 +55,7 @@ class CardsPageController extends Controller
 
         $this->issuer->issue((int) $data['account_id'], $data['brand'] ?? 'VISA');
 
-        return redirect()->route('banking.cards')->with('status', 'Virtual card issued.');
+        return redirect()->route('banking.cards')->with('success', 'Virtual card issued successfully.');
     }
 
     public function setPin(Request $request, Card $card): RedirectResponse
@@ -68,7 +68,7 @@ class CardsPageController extends Controller
 
         $this->cards->setPin($card, $data['pin']);
 
-        return back()->with('status', 'PIN updated.');
+        return back()->with('success', 'Card PIN updated successfully.');
     }
 
     public function setLimits(Request $request, Card $card): RedirectResponse
@@ -90,7 +90,7 @@ class CardsPageController extends Controller
             isset($data['single']) ? Money::of((string) $data['single'], $currency) : null,
         );
 
-        return back()->with('status', 'Limits updated.');
+        return back()->with('success', 'Card limits updated successfully.');
     }
 
     public function freeze(Request $request, Card $card): RedirectResponse
@@ -98,7 +98,7 @@ class CardsPageController extends Controller
         $this->authorizeCard($request, $card);
         $this->cards->freeze($card);
 
-        return back()->with('status', 'Card frozen.');
+        return back()->with('success', 'Card frozen successfully. It can no longer be used for transactions.');
     }
 
     public function unfreeze(Request $request, Card $card): RedirectResponse
@@ -106,7 +106,7 @@ class CardsPageController extends Controller
         $this->authorizeCard($request, $card);
         $this->cards->unfreeze($card);
 
-        return back()->with('status', 'Card unfrozen.');
+        return back()->with('success', 'Card unfrozen successfully. It is now active for transactions.');
     }
 
     public function requestReplacement(Request $request, Card $card): RedirectResponse
@@ -119,7 +119,7 @@ class CardsPageController extends Controller
 
         $this->cards->requestReplacement($card, $data['reason']);
 
-        return back()->with('status', 'Replacement requested.');
+        return back()->with('success', 'Replacement requested successfully. A new card will be issued shortly.');
     }
 
     private function authorizeCard(Request $request, Card $card): void

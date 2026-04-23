@@ -16,6 +16,16 @@ final readonly class DateRange
         }
     }
 
+    public function start(): DateTimeImmutable
+    {
+        return $this->start;
+    }
+
+    public function end(): DateTimeImmutable
+    {
+        return $this->end;
+    }
+
     public static function lastDays(int $days): self
     {
         $end = new DateTimeImmutable('today');

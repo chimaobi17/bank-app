@@ -144,11 +144,6 @@
 
 /* ── Phase 17 — Premium Banking Design Tokens ─────────────────── */
 
-/* Premium gradient for the hero balance card */
-.bg-premium-gradient {
-    background: linear-gradient(135deg, #7C3AED 0%, #4F1DAF 50%, #3B0F99 100%);
-}
-
 /* Hide scrollbar for horizontal carousels */
 .no-scrollbar {
     -ms-overflow-style: none;
@@ -188,12 +183,21 @@
     animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* Glass card effect */
+/* Glass card effect (Theme-aware) */
 .glass-card {
-    background: rgba(26, 26, 26, 0.6);
+    background: color-mix(in srgb, var(--card) 60%, transparent);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+}
+
+/* Premium gradient for the hero balance card */
+.bg-premium-gradient {
+    background: linear-gradient(135deg, #7C3AED 0%, #4F1DAF 50%, #3B0F99 100%);
+}
+
+.dark .bg-premium-gradient {
+    background: linear-gradient(135deg, #5B21B6 0%, #312E81 50%, #1E1B4B 100%);
 }
 
 /* Gradient text effect */

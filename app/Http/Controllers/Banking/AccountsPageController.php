@@ -80,7 +80,7 @@ class AccountsPageController extends Controller
         }
 
         $validated = $request->validated();
-        $this->accounts->openAccount(
+        $account = $this->accounts->openAccount(
             $user->customer,
             AccountType::from($validated['account_type']),
             $validated['branch_id'] ?? null,
@@ -91,6 +91,12 @@ class AccountsPageController extends Controller
             ])
         );
 
-        return redirect()->route('banking.accounts')->with('success', 'Account opened. Awaiting activation.');
+        // Auto-activate and fund for simulation
+        $account->status = \App\Enums\AccountStatus::ACTIVE;
+        $account->balance = '10000.0000';
+        $account->available_balance = '10000.0000';
+        $account->save();
+
+        return redirect()->route('banking.accounts')->with('success', 'Account opened and funded with ₦10,000.00 demo balance!');
     }
 }

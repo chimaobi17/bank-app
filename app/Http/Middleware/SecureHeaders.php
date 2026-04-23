@@ -30,12 +30,12 @@ class SecureHeaders
         // In production, remove 'unsafe-inline' and use nonces.
         $csp = implode('; ', [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval'",           // Vite HMR in dev
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:5173 http://127.0.0.1:5173 http://[::1]:5173",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com http://localhost:5173 http://127.0.0.1:5173 http://[::1]:5173",
             "font-src 'self' https://fonts.gstatic.com",
-            "img-src 'self' data: blob:",
-            "connect-src 'self' ws: wss:",                                // WebSocket for Vite HMR
-            "frame-ancestors 'none'",                                     // No iframes
+            "img-src 'self' data: blob: http://localhost:5173 http://127.0.0.1:5173 http://[::1]:5173",
+            "connect-src 'self' ws: wss: http://localhost:5173 http://127.0.0.1:5173 http://[::1]:5173 ws://localhost:5173 ws://127.0.0.1:5173 ws://[::1]:5173",
+            "frame-ancestors 'none'",
             "form-action 'self'",
             "base-uri 'self'",
             "object-src 'none'",

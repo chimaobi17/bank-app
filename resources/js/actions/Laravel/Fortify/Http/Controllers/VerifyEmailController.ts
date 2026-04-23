@@ -1,7 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
-/**
-* @see \Laravel\Fortify\Http\Controllers\VerifyEmailController::__invoke
-* @see vendor/laravel/fortify/src/Http/Controllers/VerifyEmailController.php:18
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+er.php:18
 * @route '/email/verify/{id}/{hash}'
 */
 export const __invoke = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::create
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:41
+* @see \App\Http\Controllers\Auth\RegisterController::create
+* @see Http/Controllers/Auth/RegisterController.php:21
 * @route '/register'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -15,8 +15,8 @@ create.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::create
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:41
+* @see \App\Http\Controllers\Auth\RegisterController::create
+* @see Http/Controllers/Auth/RegisterController.php:21
 * @route '/register'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -24,8 +24,8 @@ create.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::create
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:41
+* @see \App\Http\Controllers\Auth\RegisterController::create
+* @see Http/Controllers/Auth/RegisterController.php:21
 * @route '/register'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,8 +34,8 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::create
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:41
+* @see \App\Http\Controllers\Auth\RegisterController::create
+* @see Http/Controllers/Auth/RegisterController.php:21
 * @route '/register'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,8 +44,8 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::create
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:41
+* @see \App\Http\Controllers\Auth\RegisterController::create
+* @see Http/Controllers/Auth/RegisterController.php:21
 * @route '/register'
 */
 const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,8 +54,8 @@ const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 })
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::create
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:41
+* @see \App\Http\Controllers\Auth\RegisterController::create
+* @see Http/Controllers/Auth/RegisterController.php:21
 * @route '/register'
 */
 createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -64,8 +64,8 @@ createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::create
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:41
+* @see \App\Http\Controllers\Auth\RegisterController::create
+* @see Http/Controllers/Auth/RegisterController.php:21
 * @route '/register'
 */
 createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -81,8 +81,8 @@ createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 create.form = createForm
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::store
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:53
+* @see \App\Http\Controllers\Auth\RegisterController::store
+* @see Http/Controllers/Auth/RegisterController.php:26
 * @route '/register'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -96,8 +96,8 @@ store.definition = {
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::store
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:53
+* @see \App\Http\Controllers\Auth\RegisterController::store
+* @see Http/Controllers/Auth/RegisterController.php:26
 * @route '/register'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -105,8 +105,8 @@ store.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::store
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:53
+* @see \App\Http\Controllers\Auth\RegisterController::store
+* @see Http/Controllers/Auth/RegisterController.php:26
 * @route '/register'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -115,8 +115,8 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::store
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:53
+* @see \App\Http\Controllers\Auth\RegisterController::store
+* @see Http/Controllers/Auth/RegisterController.php:26
 * @route '/register'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -125,8 +125,8 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 })
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::store
-* @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:53
+* @see \App\Http\Controllers\Auth\RegisterController::store
+* @see Http/Controllers/Auth/RegisterController.php:26
 * @route '/register'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -136,6 +136,6 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 
 store.form = storeForm
 
-const RegisteredUserController = { create, store }
+const RegisterController = { create, store }
 
-export default RegisteredUserController
+export default RegisterController

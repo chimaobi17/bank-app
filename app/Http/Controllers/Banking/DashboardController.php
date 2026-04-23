@@ -31,6 +31,17 @@ class DashboardController extends Controller
             ? $this->accounts->getCustomerAccounts($customerId)
             : collect();
 
+        // Self-healing: If user has 0 accounts, give them one with funds for the demo
+        if ($customerId && $accounts->isEmpty()) {
+            $customer = $user->customer;
+            $newAccount = $this->accounts->openAccount($customer, \App\Enums\AccountType::SAVINGS, null, ['currency' => 'NGN']);
+            $newAccount->status = \App\Enums\AccountStatus::ACTIVE;
+            $newAccount->balance = '10000.0000';
+            $newAccount->available_balance = '10000.0000';
+            $newAccount->save();
+            $accounts = collect([$newAccount]);
+        }
+
         $totalBalance = $accounts->sum('balance');
 
         $recentTransactions = $customerId
@@ -64,17 +75,14 @@ class DashboardController extends Controller
             ]),
             'totalBalance' => (string) $totalBalance,
             'yesterday_earnings' => (string) round($totalBalance * 0.0005, 2),
-            'cards' => $cards->count() > 0 ? $cards->map(fn ($c) => [
+            'cards' => $cards->map(fn ($c) => [
                 'brand' => $c->brand,
                 'last4' => substr($c->masked_pan, -4),
                 'type' => $c->card_type,
                 'status' => $c->status->value,
                 'expiry' => $c->expiry?->format('m/y'),
-            ]) : [
-                ['brand' => 'Visa', 'last4' => '8842', 'type' => 'Virtual', 'status' => 'active', 'expiry' => '12/28'],
-                ['brand' => 'Mastercard', 'last4' => '1092', 'type' => 'Physical', 'status' => 'active', 'expiry' => '05/27'],
-            ],
-            'savingsGoals' => $savingsGoals,
+            ]),
+            'savingsGoals' => [],
             'spendAnalytics' => $this->buildSpendAnalytics($accounts),
             'monthlyBreakdown' => $this->buildMonthlyBreakdown($accounts),
             'recentTransactions' => $recentTransactions->map(fn ($t) => [

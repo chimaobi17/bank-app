@@ -23,4 +23,9 @@ export default defineConfig({
             command: "/usr/local/bin/podman exec bankapp php artisan wayfinder:generate"
         }),
     ],
+    server: {
+        host: '127.0.0.1',
+        port: 5173,
+        strictPort: true,
+    },
 });

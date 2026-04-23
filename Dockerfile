@@ -21,10 +21,12 @@ RUN mkdir -p /opt/oracle && \
     echo /opt/oracle/instantclient_21_4 > /etc/ld.so.conf.d/oracle.conf && \
     ldconfig
 
-# Install OCI8 extension via PECL (yajra/laravel-oci8 wraps OCI8 — no pdo_oci needed)
-RUN apt-get update && apt-get install -y --no-install-recommends libaio-dev && rm -rf /var/lib/apt/lists/* && \
+# Install OCI8 extension via PECL and standard banking extensions (bcmath, intl)
+RUN apt-get update && apt-get install -y --no-install-recommends libaio-dev libicu-dev && \
     echo 'instantclient,/opt/oracle/instantclient_21_4' | pecl install oci8 && \
-    docker-php-ext-enable oci8
+    docker-php-ext-enable oci8 && \
+    docker-php-ext-install bcmath intl && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

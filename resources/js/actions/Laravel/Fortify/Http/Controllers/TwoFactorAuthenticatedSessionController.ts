@@ -1,7 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
-/**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController::create
-* @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticatedSessionController.php:41
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
+tp/Controllers/TwoFactorAuthenticatedSessionController.php:41
 * @route '/two-factor-challenge'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({

@@ -1,7 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
-/**
-* @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::create
-* @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:22
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
+rs/PasswordResetLinkController.php:22
 * @route '/forgot-password'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({

@@ -102,10 +102,10 @@ class InterbankPageController extends Controller
             ));
 
             if ($response->isSuccessful() || $response->isPending()) {
-                return redirect()->route('banking.dashboard')->with('status', "Transfer queued. Session: {$response->sessionId}");
+                return redirect()->back()->with('success', "Transfer of ₦" . number_format($data['amount'], 2) . " queued successfully. Session: {$response->sessionId}");
             }
 
-            return back()->withErrors(['amount' => $response->responseMessage ?? 'Transfer failed.']);
+            return back()->with('error', $response->responseMessage ?? 'Transfer failed.');
         } catch (\Throwable $e) {
             return back()->withErrors(['amount' => $e->getMessage()]);
         }

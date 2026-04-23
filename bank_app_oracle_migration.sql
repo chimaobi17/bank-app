@@ -54,6 +54,7 @@ CREATE TABLE customers (
     kyc_doc_id_path VARCHAR2(255),
     kyc_doc_address_path VARCHAR2(255),
     kyc_verified_at TIMESTAMP,
+    phone_hash VARCHAR2(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );

@@ -13,8 +13,10 @@ const appName = import.meta.env.VITE_APP_NAME || 'ApexBank';
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     resolve: (name) => {
-        console.log('Resolving page:', name);
-        return resolvePageComponent(`./pages/${name}.tsx`, import.meta.glob('./pages/**/*.tsx'));
+        return resolvePageComponent(
+            `./pages/${name}.tsx`,
+            import.meta.glob('./pages/**/*.tsx')
+        ) as Promise<any>;
     },
     setup({ el, App, props }) {
         const root = createRoot(el);

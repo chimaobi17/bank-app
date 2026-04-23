@@ -8,9 +8,10 @@ import {
     ChevronRight, 
     ShieldCheck, 
     Info,
-    ArrowUpRight
+    ArrowUpRight,
+    TrendingUp
 } from 'lucide-react';
-import AppLayout from '@/layouts/app-layout';
+import DashboardLayout from '@/layouts/dashboard-layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -63,7 +64,7 @@ export default function AccountsIndex({ accounts }: Props) {
     };
 
     return (
-        <AppLayout breadcrumbs={[{ title: 'Accounts', href: '/banking/accounts' }]}>
+        <DashboardLayout>
             <Head title="Accounts" />
             
             <div className="flex flex-col gap-8 p-6 max-w-7xl mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -86,7 +87,7 @@ export default function AccountsIndex({ accounts }: Props) {
                                 <Plus className="mr-2 size-5" /> Open New Account
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="rounded-[2rem] border-white/5 bg-background shadow-2xl sm:max-w-[425px]">
+                        <DialogContent className="rounded-[2rem] border-border bg-background shadow-2xl sm:max-w-[425px]">
                             <DialogHeader>
                                 <DialogTitle className="text-2xl font-black tracking-tight">Institutional Account</DialogTitle>
                                 <DialogDescription className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
@@ -97,10 +98,10 @@ export default function AccountsIndex({ accounts }: Props) {
                                 <div className="space-y-2">
                                     <Label className="text-xs font-bold uppercase tracking-widest opacity-70">Account Type</Label>
                                     <Select value={data.account_type} onValueChange={(v) => setData('account_type', v)}>
-                                        <SelectTrigger className="h-12 border-muted-foreground/20 rounded-xl bg-muted/30">
+                                        <SelectTrigger className="h-12 border-border rounded-xl bg-muted/30">
                                             <SelectValue />
                                         </SelectTrigger>
-                                        <SelectContent className="rounded-xl border-white/5">
+                                        <SelectContent className="rounded-xl border-border">
                                             <SelectItem value="savings">Savings (High Interest)</SelectItem>
                                             <SelectItem value="checking">Checking (Daily Transactional)</SelectItem>
                                             <SelectItem value="fixed_deposit">Fixed Deposit (Time-Locked)</SelectItem>
@@ -223,7 +224,7 @@ export default function AccountsIndex({ accounts }: Props) {
                                     </div>
 
                                     {parseFloat(a.available_balance) !== parseFloat(a.balance) && (
-                                        <div className="mt-6 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-muted-foreground p-3 rounded-2xl bg-muted/50 border border-white/5">
+                                        <div className="mt-6 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-muted-foreground p-3 rounded-2xl bg-muted/50 border border-border">
                                             <span>Available Assets</span>
                                             <span className="text-foreground">{formatMoney(a.available_balance, a.currency)}</span>
                                         </div>
@@ -234,6 +235,6 @@ export default function AccountsIndex({ accounts }: Props) {
                     ))}
                 </div>
             </div>
-        </AppLayout>
+        </DashboardLayout>
     );
 }

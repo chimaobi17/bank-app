@@ -86,8 +86,11 @@ class OnboardingController extends Controller
 
         $path = $request->file('document')->store('kyc/address', 'local');
         $this->engine->attachAddressProof($customer, $path);
+        
+        // Auto approve for simulated outcome
+        $this->engine->approve($customer);
 
-        return redirect()->route('banking.onboarding')->with('status', 'Address proof uploaded. Awaiting review.');
+        return redirect()->route('banking.dashboard')->with('success', 'Onboarding Complete! Your account is fully verified.');
     }
 
     private function resolveCustomer(User $user): ?Customer

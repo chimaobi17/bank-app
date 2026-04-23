@@ -112,43 +112,37 @@ export default function InterbankTransfer({ accounts, banks, flash }: Props) {
                 {/* Back */}
                 <button
                     onClick={() => router.visit('/banking/transfers')}
-                    className="flex items-center gap-2 self-start text-xs font-black uppercase tracking-widest text-gray-500 hover:text-white"
+                    className="flex items-center gap-2 self-start text-xs font-black uppercase tracking-widest text-muted-foreground hover:text-foreground"
                 >
                     <ArrowLeft size={14} /> Back
                 </button>
 
                 {/* Header */}
                 <header className="flex flex-col gap-1">
-                    <p className="text-[11px] font-bold uppercase tracking-widest text-gray-500">
+                    <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">
                         External
                     </p>
-                    <h1 className="text-2xl font-black tracking-tight text-white">
+                    <h1 className="text-2xl font-black tracking-tight text-foreground">
                         Send to Other Banks
                     </h1>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-muted-foreground">
                         Transfer funds to accounts in other Nigerian banks via NIP.
                     </p>
                 </header>
 
-                {flash?.status && (
-                    <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm font-semibold text-emerald-300">
-                        {flash.status}
-                    </div>
-                )}
-
                 <form onSubmit={submit} className="flex flex-col gap-4">
                     {/* Source account */}
-                    <section className="flex flex-col gap-1.5 rounded-[2rem] border border-white/5 bg-white/[0.02] p-5">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">
+                    <section className="flex flex-col gap-1.5 rounded-[2rem] border border-border bg-card/50 p-5">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                             From
                         </span>
                         <select
                             value={form.data.source_account_number}
                             onChange={(e) => form.setData('source_account_number', e.target.value)}
-                            className="rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-sm text-white focus:border-primary/40 focus:outline-none"
+                            className="rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground focus:border-primary/40 focus:outline-none"
                         >
                             {accounts.map((a) => (
-                                <option key={a.account_number} value={a.account_number} className="bg-neutral-900">
+                                <option key={a.account_number} value={a.account_number} className="bg-background">
                                     {a.account_type.replace('_', ' ')} · {a.account_number} · {fmt(a.available_balance)}
                                 </option>
                             ))}
@@ -159,19 +153,19 @@ export default function InterbankTransfer({ accounts, banks, flash }: Props) {
                     </section>
 
                     {/* Destination */}
-                    <section className="flex flex-col gap-3 rounded-[2rem] border border-white/5 bg-white/[0.02] p-5">
+                    <section className="flex flex-col gap-3 rounded-[2rem] border border-border bg-card/50 p-5">
                         <div className="flex items-center gap-3">
                             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                                 <Building2 size={18} />
                             </div>
                             <div>
-                                <h2 className="text-sm font-black text-white">Destination</h2>
-                                <p className="text-[10px] text-gray-500">Select the recipient's bank and account.</p>
+                                <h2 className="text-sm font-black text-foreground">Destination</h2>
+                                <p className="text-[10px] text-muted-foreground">Select the recipient's bank and account.</p>
                             </div>
                         </div>
 
                         <label className="flex flex-col gap-1">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                                 Bank
                             </span>
                             <select
@@ -180,13 +174,13 @@ export default function InterbankTransfer({ accounts, banks, flash }: Props) {
                                     form.setData('destination_bank_code', e.target.value);
                                     setResolvedName(null);
                                 }}
-                                className="rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-sm text-white focus:border-primary/40 focus:outline-none"
+                                className="rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground focus:border-primary/40 focus:outline-none"
                             >
-                                <option value="" className="bg-neutral-900">
+                                <option value="" className="bg-background">
                                     Select a bank
                                 </option>
                                 {banks.map((b) => (
-                                    <option key={b.code} value={b.code} className="bg-neutral-900">
+                                    <option key={b.code} value={b.code} className="bg-background">
                                         {b.name}
                                     </option>
                                 ))}
@@ -194,7 +188,7 @@ export default function InterbankTransfer({ accounts, banks, flash }: Props) {
                         </label>
 
                         <label className="flex flex-col gap-1">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                                 Account Number
                             </span>
                             <div className="flex gap-2">
@@ -208,7 +202,7 @@ export default function InterbankTransfer({ accounts, banks, flash }: Props) {
                                         setResolvedName(null);
                                     }}
                                     placeholder="10-digit number"
-                                    className="flex-1 rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-gray-600 focus:border-primary/40 focus:outline-none"
+                                    className="flex-1 rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/40 focus:outline-none"
                                 />
                                 <button
                                     type="button"
@@ -242,9 +236,9 @@ export default function InterbankTransfer({ accounts, banks, flash }: Props) {
                     </section>
 
                     {/* Amount & narration */}
-                    <section className="flex flex-col gap-3 rounded-[2rem] border border-white/5 bg-white/[0.02] p-5">
+                    <section className="flex flex-col gap-3 rounded-[2rem] border border-border bg-card/50 p-5">
                         <label className="flex flex-col gap-1.5">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                                 Amount ({fromAccount?.currency ?? 'NGN'})
                             </span>
                             <input
@@ -252,10 +246,10 @@ export default function InterbankTransfer({ accounts, banks, flash }: Props) {
                                 value={form.data.amount}
                                 onChange={(e) => form.setData('amount', e.target.value)}
                                 placeholder="0.00"
-                                className="rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-lg font-mono font-bold text-white placeholder:text-gray-600 focus:border-primary/40 focus:outline-none"
+                                className="rounded-2xl border border-border bg-background px-4 py-3 text-lg font-mono font-bold text-foreground placeholder:text-muted-foreground focus:border-primary/40 focus:outline-none"
                             />
                             {fromAccount && (
-                                <span className="text-[10px] font-bold text-gray-600">
+                                <span className="text-[10px] font-bold text-muted-foreground">
                                     Available: {fmt(fromAccount.available_balance)}
                                 </span>
                             )}
@@ -265,7 +259,7 @@ export default function InterbankTransfer({ accounts, banks, flash }: Props) {
                         </label>
 
                         <label className="flex flex-col gap-1.5">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                                 Narration
                             </span>
                             <input
@@ -273,7 +267,7 @@ export default function InterbankTransfer({ accounts, banks, flash }: Props) {
                                 onChange={(e) => form.setData('narration', e.target.value)}
                                 maxLength={100}
                                 placeholder="Payment for…"
-                                className="rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-sm text-white placeholder:text-gray-600 focus:border-primary/40 focus:outline-none"
+                                className="rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/40 focus:outline-none"
                             />
                         </label>
                     </section>

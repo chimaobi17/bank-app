@@ -1,7 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
-/**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController::show
-* @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorQrCodeController.php:16
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
+woFactorQrCodeController.php:16
 * @route '/user/two-factor-qr-code'
 */
 export const show = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({

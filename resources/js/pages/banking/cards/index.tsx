@@ -55,8 +55,8 @@ export default function CardsIndex({ cards, accounts, flash }: Props) {
             <div className="flex flex-col gap-6 px-6 pt-10 pb-10">
                 <header className="flex items-center justify-between">
                     <div>
-                        <p className="text-[11px] font-bold uppercase tracking-widest text-gray-500">Wallet</p>
-                        <h1 className="text-2xl font-black tracking-tight text-white">Your cards</h1>
+                        <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">Wallet</p>
+                        <h1 className="text-2xl font-black tracking-tight text-foreground">Your cards</h1>
                     </div>
                     <button
                         onClick={() => setShowIssuer((v) => !v)}
@@ -75,21 +75,21 @@ export default function CardsIndex({ cards, accounts, flash }: Props) {
                 {showIssuer && (
                     <form
                         onSubmit={submit}
-                        className="flex flex-col gap-3 rounded-[2rem] border border-white/5 bg-white/[0.02] p-5"
+                        className="flex flex-col gap-3 rounded-[2rem] border border-border bg-card/50 p-5"
                     >
-                        <h3 className="text-sm font-black text-white">Issue a Virtual Card</h3>
+                        <h3 className="text-sm font-black text-foreground">Issue a Virtual Card</h3>
 
                         <label className="flex flex-col gap-1">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                                 Funding Account
                             </span>
                             <select
                                 value={form.data.account_id}
                                 onChange={(e) => form.setData('account_id', e.target.value)}
-                                className="rounded-2xl border border-white/5 bg-black/40 px-4 py-3 text-sm text-white focus:border-primary/40 focus:outline-none"
+                                className="rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground focus:border-primary/40 focus:outline-none"
                             >
                                 {accounts.map((a) => (
-                                    <option key={a.account_id} value={a.account_id} className="bg-neutral-900">
+                                    <option key={a.account_id} value={a.account_id} className="bg-background text-foreground">
                                         {a.account_number} · {a.account_type} · {a.currency}
                                     </option>
                                 ))}
@@ -105,7 +105,7 @@ export default function CardsIndex({ cards, accounts, flash }: Props) {
                                     className={`rounded-2xl border px-3 py-2.5 text-[10px] font-black uppercase tracking-widest transition-all ${
                                         form.data.brand === b
                                             ? 'border-primary/40 bg-primary/10 text-primary'
-                                            : 'border-white/5 bg-white/[0.02] text-gray-400'
+                                            : 'border-border bg-card/20 text-muted-foreground'
                                     }`}
                                 >
                                     {b}
@@ -183,10 +183,10 @@ function CardTile({ card }: { card: CardRow }) {
 
 function EmptyState() {
     return (
-        <div className="flex flex-col items-center gap-3 rounded-[2rem] border border-dashed border-white/10 bg-white/[0.02] p-10 text-center">
-            <CreditCard size={32} className="text-gray-600" />
-            <p className="text-sm font-bold text-white">No cards yet</p>
-            <p className="text-xs text-gray-500">Issue a virtual card or request a physical one.</p>
+        <div className="flex flex-col items-center gap-3 rounded-[2rem] border border-dashed border-border bg-card/20 p-10 text-center">
+            <CreditCard size={32} className="text-muted-foreground" />
+            <p className="text-sm font-bold text-foreground">No cards yet</p>
+            <p className="text-xs text-muted-foreground">Issue a virtual card or request a physical one.</p>
         </div>
     );
 }

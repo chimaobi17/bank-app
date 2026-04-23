@@ -40,7 +40,7 @@ export default function Welcome({ canRegister, stats }: Props) {
                     {canRegister && (
                         <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
                             <Link
-                                href={register()}
+                                href={register().url}
                                 className="flex w-full items-center justify-center gap-2 rounded-2xl bg-amber-500 px-8 py-4 text-base font-bold text-black shadow-[0_10px_30px_rgba(245,158,11,0.3)] transition-all hover:bg-amber-400 active:scale-95 sm:w-auto"
                             >
                                 Open Account <ArrowRightLeft className="h-5 w-5" />

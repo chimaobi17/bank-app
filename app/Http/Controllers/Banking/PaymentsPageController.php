@@ -74,7 +74,8 @@ class PaymentsPageController extends Controller
             return back()->withErrors(['amount' => $e->getMessage()]);
         }
 
-        return redirect()->route('banking.payments')->with('success', 'Payment processed successfully.');
+        $validated = $request->validated();
+        return redirect()->back()->with('success', "Payment of ₦" . number_format($validated['amount'], 2) . " for biller was processed successfully.");
     }
 
     public function payAirtime(PaymentRequest $request): RedirectResponse
@@ -85,6 +86,7 @@ class PaymentsPageController extends Controller
             return back()->withErrors(['amount' => $e->getMessage()]);
         }
 
-        return redirect()->route('banking.payments')->with('success', 'Airtime top-up successful.');
+        $validated = $request->validated();
+        return redirect()->back()->with('success', "Airtime top-up of ₦" . number_format($validated['amount'], 2) . " to " . $validated['recipient_identifier'] . " was successful.");
     }
 }
