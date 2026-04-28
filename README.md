@@ -1,5 +1,7 @@
 # ApexBank 🏦
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/chimaobi17/bank-app)
+
 [![Laravel](https://img.shields.io/badge/Laravel-13.x-FF2D20?style=flat-square&logo=laravel)](https://laravel.com)
 [![React](https://img.shields.io/badge/React-19.x-61DAFB?style=flat-square&logo=react)](https://react.dev)
 [![Inertia](https://img.shields.io/badge/Inertia.js-3.x-9553E9?style=flat-square)](https://inertiajs.com)
@@ -9,6 +11,9 @@
 **ApexBank** is a premium, enterprise-grade private treasury banking application. It is engineered with a strict Domain-Driven Design (DDD) philosophy, a robust double-entry ledger engine, and a high-fidelity mobile-first user interface.
 
 Built for scale and security, ApexBank leverages the power of **Laravel 13**, **React 19**, and **Oracle 21c** to deliver a seamless and secure financial experience.
+
+> [!TIP]
+> This repository is optimized for a **Decoupled Architecture**: The Backend API is deployed to **Render** and the Frontend SPA is deployed to **Vercel**.
 
 ---
 
