@@ -58,6 +58,7 @@ final readonly class TransferTransaction extends AbstractTransaction implements 
         $repo = app(\App\Contracts\Repositories\TransactionRepositoryContract::class);
 
         $model = $repo->build([
+            'reference' => \App\Models\Transaction::generateReference(),
             'type' => $this->type(),
             'amount' => $this->amount->getAmount(),
             'currency' => $this->amount->getCurrency(),
@@ -67,6 +68,7 @@ final readonly class TransferTransaction extends AbstractTransaction implements 
             'narration' => $this->narration ?: 'Transfer',
             'channel' => $this->channel ?: 'web',
             'initiated_by' => $this->initiatedBy,
+            'initiated_at' => now(),
             'is_reversible' => true,
             'metadata' => $this->metadata ?: [],
         ]);

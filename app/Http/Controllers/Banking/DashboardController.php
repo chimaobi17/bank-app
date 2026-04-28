@@ -11,8 +11,7 @@ use App\Services\Reporting\SpendAnalysisService;
 use App\ValueObjects\DateRange;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -22,7 +21,7 @@ class DashboardController extends Controller
         private SpendAnalysisService $spendAnalysis,
     ) {}
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): \Illuminate\Http\JsonResponse
     {
         $user = $request->user();
         $customerId = $user->customer_id;
@@ -58,13 +57,7 @@ class DashboardController extends Controller
             ? Card::whereIn('account_id', $accounts->pluck('account_id'))->get()
             : collect();
 
-        // Simulate savings goals for demo if none exist
-        $savingsGoals = [
-            ['name' => 'Tesla Model Y', 'target' => 5000000, 'current' => 1200000, 'color' => 'bg-blue-500'],
-            ['name' => 'Tokyo Trip', 'target' => 2000000, 'current' => 800000, 'color' => 'bg-purple-500'],
-        ];
-
-        return Inertia::render('banking/dashboard', [
+        return response()->json([
             'accounts' => $accounts->map(fn ($a) => [
                 'account_id' => $a->account_id,
                 'account_number' => $a->account_number,
@@ -84,10 +77,7 @@ class DashboardController extends Controller
                 'expiry' => $c->expiry?->format('m/y'),
             ]),
             'savingsGoals' => [],
-            // Closure is resolved only when Inertia renders it (full page or
-            // partial reload with `only: ['spendAnalytics']`) — keeps the
-            // initial payload cheap on other refreshes.
-            'spendAnalytics' => fn () => $this->buildSpendAnalytics($accounts),
+            'spendAnalytics' => $this->buildSpendAnalytics($accounts),
             'monthlyBreakdown' => $this->buildMonthlyBreakdown($accounts),
             'recentTransactions' => $recentTransactions->map(fn ($t) => [
                 'transaction_id' => $t->transaction_id,
