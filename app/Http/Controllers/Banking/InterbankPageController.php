@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Banking;
 
 use App\Contracts\External\InterbankGatewayContract;
+use App\Domain\Account\AccountFactory;
+use App\Domain\Transaction\TransactionProcessor;
+use App\Domain\Transaction\WithdrawalTransaction;
 use App\DTO\External\InterbankTransferRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Account;
@@ -18,6 +21,7 @@ class InterbankPageController extends Controller
     public function __construct(
         private readonly InterbankGatewayContract $gateway,
         private readonly AccountService $accounts,
+        private readonly TransactionProcessor $processor,
     ) {}
 
     /**
@@ -25,21 +29,8 @@ class InterbankPageController extends Controller
      */
     public function create(Request $request): Response
     {
-        $user = $request->user();
-        $accounts = $user->customer_id
-            ? $this->accounts->getCustomerAccounts($user->customer_id)
-                ->where('status', \App\Enums\AccountStatus::ACTIVE)
-                ->map(fn ($a) => [
-                    'account_number' => $a->account_number,
-                    'account_type' => $a->account_type->value,
-                    'balance' => $a->balance,
-                    'available_balance' => $a->available_balance,
-                    'currency' => $a->currency,
-                ])->values()
-            : [];
-
         return Inertia::render('banking/transfers/interbank', [
-            'accounts' => $accounts,
+            'accounts' => $this->accountsFor($request),
             'banks' => $this->bankList(),
         ]);
     }
@@ -86,8 +77,9 @@ class InterbankPageController extends Controller
             return back()->withErrors(['source_account_number' => 'Account not found or not yours.']);
         }
 
-        $sessionId = 'IB-' . strtoupper(bin2hex(random_bytes(12)));
+        $sessionId = 'IB-'.strtoupper(bin2hex(random_bytes(12)));
         $bankCode = config('banking.nip_bank_code', '999999');
+        $amount = Money::of((string) $data['amount'], $source->currency ?? 'NGN');
 
         try {
             $response = $this->gateway->sendTransfer(new InterbankTransferRequest(
@@ -97,18 +89,69 @@ class InterbankPageController extends Controller
                 destinationBankCode: $data['destination_bank_code'],
                 destinationAccountNumber: $data['destination_account_number'],
                 destinationAccountName: $data['destination_account_name'],
-                amount: Money::of((string) $data['amount'], $source->currency ?? 'NGN'),
+                amount: $amount,
                 narration: $data['narration'],
             ));
 
-            if ($response->isSuccessful() || $response->isPending()) {
-                return redirect()->route('banking.dashboard')->with('success', "Transfer of ₦" . number_format($data['amount'], 2) . " queued successfully.");
+            if (! ($response->isSuccessful() || $response->isPending())) {
+                return back()->with('error', $response->responseMessage ?? 'Transfer failed.');
             }
 
-            return back()->with('error', $response->responseMessage ?? 'Transfer failed.');
+            $sourceDomain = AccountFactory::fromModel($source);
+            $withdrawal = new WithdrawalTransaction(
+                amount: $amount,
+                source: $sourceDomain,
+                initiatedBy: $user->user_id,
+                narration: $data['narration'],
+                channel: 'interbank',
+                metadata: [
+                    'session_id' => $sessionId,
+                    'destination_bank_code' => $data['destination_bank_code'],
+                    'destination_account_number' => $data['destination_account_number'],
+                    'destination_account_name' => $data['destination_account_name'],
+                    'external_reference' => $response->externalReference,
+                ],
+            );
+
+            $result = $this->processor->process($withdrawal);
         } catch (\Throwable $e) {
             return back()->withErrors(['amount' => $e->getMessage()]);
         }
+
+        $bankName = collect($this->bankList())
+            ->firstWhere('code', $data['destination_bank_code'])['name'] ?? null;
+
+        return redirect()->route('banking.interbank')->with('successTransfer', [
+            'amount' => (string) $data['amount'],
+            'currency' => $source->currency ?? 'NGN',
+            'from_account_number' => $data['source_account_number'],
+            'to_account_number' => $data['destination_account_number'],
+            'to_account_name' => $data['destination_account_name'],
+            'to_bank_name' => $bankName,
+            'reference' => $result->reference->getValue(),
+            'narration' => $data['narration'],
+            'posted_at' => $result->transaction->posted_at?->toIso8601String()
+                ?? now()->toIso8601String(),
+            'new_balance' => $source->fresh()?->available_balance,
+        ]);
+    }
+
+    private function accountsFor(Request $request): array
+    {
+        $user = $request->user();
+        if (! $user->customer_id) {
+            return [];
+        }
+
+        return $this->accounts->getCustomerAccounts($user->customer_id)
+            ->where('status', \App\Enums\AccountStatus::ACTIVE)
+            ->map(fn ($a) => [
+                'account_number' => $a->account_number,
+                'account_type' => $a->account_type->value,
+                'balance' => $a->balance,
+                'available_balance' => $a->available_balance,
+                'currency' => $a->currency,
+            ])->values()->all();
     }
 
     /**

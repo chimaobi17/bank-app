@@ -296,12 +296,12 @@ Recreate the high-fidelity, premium mobile banking interface based on the refere
 
 - [x] **OCI8 CLOB Persistence Fix**:
   - Standardize `TransactionRepository` to handle Oracle-specific CLOB binding issues using explicit attribute setting and sequence-safe `save()` methods, avoiding `ORA-00932`.
-- [/] **Domain Layer Refinement**:
-  - Tighten encapsulation in `Domain/Account` to ensure atomic balance updates (Balance + Available Balance) are inseparable.
-  - Refactor `TransferTransaction` to utilize the improved `TransactionRepository` for persistence, decoupling Domain logic from Eloquent quirks.
-- [ ] **Reactive UI Synchronization**:
-  - Implement a Global Toast provider in `DashboardLayout` to ensure 100% visibility of transfer success/failure.
-  - Optimize the Dashboard's "Spent Today" tracker to refresh instantly via Inertia partial reloads.
+- [x] **Domain Layer Refinement**:
+  - Atomic balance updates enforced via a single `final protected adjustBalances(string $delta)` choke-point on `Domain/Account`. `deposit`, `withdraw`, and `CheckingAccount::withdraw` (overdraft path) all route through it — subclasses can no longer skew `balance` vs `available_balance` independently.
+  - `TransferTransaction::execute()` no longer instantiates `new TransactionModel()`. It now calls `TransactionRepositoryContract::build()` — a new contract method that returns an unsaved, Oracle-safe model with explicit `narration` / `metadata` hydration. Persistence remains atomic via `TransactionProcessor`'s `DB::transaction`.
+- [x] **Reactive UI Synchronization**:
+  - Global toast provider active via the root `<Toaster>` in `app.tsx`, whose `useFlashToast` hook now surfaces both the structured `flash.toast` shape and the flat `flash.success` / `flash.error` strings used by every controller — dedup guarded by `useRef` so re-renders don't spam.
+  - Dashboard's `spendAnalytics` prop is now a lazy closure in `DashboardController`; a "Refresh" control on the Analytics section calls `router.reload({ only: ['spendAnalytics'], preserveState: true })` for instant partial reloads without a full page fetch.
 
 ---
 

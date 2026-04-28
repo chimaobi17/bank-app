@@ -1,0 +1,42 @@
+services:
+  # ApexBank API Backend (Laravel + Oracle Client)
+  - type: web
+    name: apex-bank-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_NAME
+        value: ApexBank
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: DB_CONNECTION
+        value: oracle
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "1521"
+      - key: DB_DATABASE
+        value: xe
+      - key: DB_SERVICE_NAME
+        value: xe
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_CHARSET
+        value: AL32UTF8
+      - key: SESSION_DRIVER
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: LOG_CHANNEL
+        value: stderr

@@ -84,7 +84,10 @@ class DashboardController extends Controller
                 'expiry' => $c->expiry?->format('m/y'),
             ]),
             'savingsGoals' => [],
-            'spendAnalytics' => $this->buildSpendAnalytics($accounts),
+            // Closure is resolved only when Inertia renders it (full page or
+            // partial reload with `only: ['spendAnalytics']`) — keeps the
+            // initial payload cheap on other refreshes.
+            'spendAnalytics' => fn () => $this->buildSpendAnalytics($accounts),
             'monthlyBreakdown' => $this->buildMonthlyBreakdown($accounts),
             'recentTransactions' => $recentTransactions->map(fn ($t) => [
                 'transaction_id' => $t->transaction_id,

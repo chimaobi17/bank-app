@@ -6,7 +6,6 @@ use App\Contracts\Domain\Reversible;
 use App\Domain\Account\Account;
 use App\Enums\TransactionStatus;
 use App\Enums\TransactionType;
-use App\Models\Transaction as TransactionModel;
 use App\ValueObjects\Money;
 use InvalidArgumentException;
 
@@ -55,19 +54,22 @@ final readonly class TransferTransaction extends AbstractTransaction implements 
         $this->source->withdraw($this->amount);
         $this->destination->deposit($this->amount);
 
-        $model = new TransactionModel();
-        $model->type = $this->type();
-        $model->amount = $this->amount->getAmount();
-        $model->currency = $this->amount->getCurrency();
-        $model->source_account_id = $this->source->model()->account_id;
-        $model->dest_account_id = $this->destination->model()->account_id;
-        $model->status = TransactionStatus::PENDING;
-        $model->narration = $this->narration ?: 'Transfer';
-        $model->channel = $this->channel ?: 'web';
-        $model->initiated_by = $this->initiatedBy;
-        $model->is_reversible = true;
-        $model->metadata = $this->metadata ?: [];
-        // Note: Reference is generated in booted()
+        /** @var \App\Contracts\Repositories\TransactionRepositoryContract $repo */
+        $repo = app(\App\Contracts\Repositories\TransactionRepositoryContract::class);
+
+        $model = $repo->build([
+            'type' => $this->type(),
+            'amount' => $this->amount->getAmount(),
+            'currency' => $this->amount->getCurrency(),
+            'source_account_id' => $this->source->model()->account_id,
+            'dest_account_id' => $this->destination->model()->account_id,
+            'status' => TransactionStatus::PENDING,
+            'narration' => $this->narration ?: 'Transfer',
+            'channel' => $this->channel ?: 'web',
+            'initiated_by' => $this->initiatedBy,
+            'is_reversible' => true,
+            'metadata' => $this->metadata ?: [],
+        ]);
 
         return TransactionResult::success($model, $this->amount);
     }

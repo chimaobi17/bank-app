@@ -81,8 +81,7 @@ abstract class Account implements Auditable
         $this->guardSameCurrency($amount);
         $this->guardCanReceive();
 
-        $this->model->balance = bcadd($this->model->balance, $amount->getAmount(), 4);
-        $this->model->available_balance = bcadd($this->model->available_balance, $amount->getAmount(), 4);
+        $this->adjustBalances($amount->getAmount());
     }
 
     public function withdraw(Money $amount): void
@@ -91,8 +90,21 @@ abstract class Account implements Auditable
         $this->guardSameCurrency($amount);
         $this->guardSufficientFunds($amount);
 
-        $this->model->balance = bcsub($this->model->balance, $amount->getAmount(), 4);
-        $this->model->available_balance = bcsub($this->model->available_balance, $amount->getAmount(), 4);
+        $this->adjustBalances('-'.$amount->getAmount());
+    }
+
+    /**
+     * Single choke-point for balance mutation. Updates `balance` and
+     * `available_balance` in one step so subclasses cannot accidentally
+     * skew the two sides. `$delta` may be positive or negative (string-safe).
+     */
+    final protected function adjustBalances(string $delta): void
+    {
+        $newBalance = bcadd((string) $this->model->balance, $delta, 4);
+        $newAvailable = bcadd((string) $this->model->available_balance, $delta, 4);
+
+        $this->model->balance = $newBalance;
+        $this->model->available_balance = $newAvailable;
     }
 
     /**

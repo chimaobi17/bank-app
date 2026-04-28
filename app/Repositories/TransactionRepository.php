@@ -20,16 +20,26 @@ class TransactionRepository implements TransactionRepositoryContract
 
     public function create(array $data): Transaction
     {
-        $transaction = new Transaction();
-        $transaction->fill($data);
-        
-        // Oracle-OCI8 workaround: Explicitly set CLOB-prone fields if provided as null
-        // while also ensuring they aren't mass-assignment skipped if null in some setups.
-        if (isset($data['narration'])) $transaction->narration = $data['narration'];
-        if (isset($data['metadata'])) $transaction->metadata = $data['metadata'];
-        
+        $transaction = $this->build($data);
         $transaction->save();
-        
+
+        return $transaction;
+    }
+
+    public function build(array $data): Transaction
+    {
+        $transaction = new Transaction;
+        $transaction->fill($data);
+
+        // Oracle-OCI8 workaround: Explicitly set CLOB-prone fields if provided
+        // (including null) so they aren't skipped by mass-assignment filters.
+        if (array_key_exists('narration', $data)) {
+            $transaction->narration = $data['narration'];
+        }
+        if (array_key_exists('metadata', $data)) {
+            $transaction->metadata = $data['metadata'];
+        }
+
         return $transaction;
     }
 

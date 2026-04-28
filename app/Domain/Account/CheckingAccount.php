@@ -36,8 +36,7 @@ final class CheckingAccount extends Account implements FeeCharging
             throw new InsufficientFundsException;
         }
 
-        $this->model->balance = bcsub($this->model->balance, $amount->getAmount(), 4);
-        $this->model->available_balance = bcsub($this->model->available_balance, $amount->getAmount(), 4);
+        $this->adjustBalances('-'.$amount->getAmount());
     }
 
     public function feeFor(string $operation, Money $amount): Money
