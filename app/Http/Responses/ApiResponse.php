@@ -52,7 +52,7 @@ final class ApiResponse
         ];
 
         return response()->json($response, $httpStatus, [
-            RequestId::HEADER => Request::attributes->get(RequestId::ATTRIBUTE),
+            RequestId::HEADER => request()->attributes->get(RequestId::ATTRIBUTE),
         ]);
     }
 
@@ -102,7 +102,7 @@ final class ApiResponse
     private static function baseMeta(): array
     {
         return [
-            'request_id' => Request::attributes->get(RequestId::ATTRIBUTE),
+            'request_id' => request()->attributes->get(RequestId::ATTRIBUTE),
             'timestamp' => now()->toIso8601String(),
             'version' => 'v1',
         ];
