@@ -10,7 +10,6 @@ use App\Services\NotificationService;
 use App\Services\Reporting\SpendAnalysisService;
 use App\ValueObjects\DateRange;
 use Carbon\CarbonImmutable;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -20,7 +19,7 @@ class DashboardController extends Controller
         private SpendAnalysisService $spendAnalysis,
     ) {}
 
-    public function __invoke(Request $request): \Illuminate\Http\JsonResponse
+    public function __invoke(\Illuminate\Http\Request $request): \Illuminate\Http\JsonResponse
     {
         $user = $request->user();
         $customerId = $user->customer_id;
