@@ -53,3 +53,4 @@ auth.json
 /routes.txt
 /pnpm-workspace.yaml
 package.xml
+.vercel

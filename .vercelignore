@@ -1,0 +1,14 @@
+node_modules/
+vendor/
+storage/
+.git/
+tests/
+.env
+.idea/
+.vscode/
+
+*.zip
+*.dmg
+*.pkg
+*.tar.xz
+*.phar
