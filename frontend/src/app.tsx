@@ -1,3 +1,4 @@
+import './css/app.css';
 import { createRoot } from 'react-dom/client';
 import { initializeTheme } from '@/hooks/use-appearance';
 import { AppRouter } from './router';

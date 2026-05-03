@@ -75,41 +75,32 @@ export function initializeTheme(): void {
         return;
     }
 
-    if (!localStorage.getItem('appearance')) {
-        localStorage.setItem('appearance', 'system');
-        setCookie('appearance', 'system');
-    }
+    localStorage.setItem('appearance', 'dark');
+    setCookie('appearance', 'dark');
 
-    currentAppearance = getStoredAppearance();
+    currentAppearance = 'dark';
     applyTheme(currentAppearance);
-
-    // Set up system theme change listener
-    mediaQuery()?.addEventListener('change', handleSystemThemeChange);
 }
 
 export function useAppearance(): UseAppearanceReturn {
     const appearance: Appearance = useSyncExternalStore(
         subscribe,
         () => currentAppearance,
-        () => 'system',
+        () => 'dark',
     );
 
-    const resolvedAppearance: ResolvedAppearance = isDarkMode(appearance)
-        ? 'dark'
-        : 'light';
+    const resolvedAppearance: ResolvedAppearance = 'dark';
 
     const updateAppearance = (mode: Appearance): void => {
-        currentAppearance = mode;
+        currentAppearance = 'dark';
 
-        // Store in localStorage for client-side persistence...
-        localStorage.setItem('appearance', mode);
+        localStorage.setItem('appearance', 'dark');
 
-        // Store in cookie for SSR...
-        setCookie('appearance', mode);
+        setCookie('appearance', 'dark');
 
-        applyTheme(mode);
+        applyTheme('dark');
         notify();
     };
 
-    return { appearance, resolvedAppearance, updateAppearance } as const;
+    return { appearance: 'dark', resolvedAppearance: 'dark', updateAppearance } as const;
 }

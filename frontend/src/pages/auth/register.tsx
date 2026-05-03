@@ -17,13 +17,13 @@ export default function Register() {
                 {...store.form()}
                 resetOnSuccess={['password', 'password_confirmation', 'gov_id']}
                 disableWhileProcessing
-                className="flex flex-col gap-5"
+                className="flex flex-col gap-6"
             >
                 {({ processing, errors }) => (
                     <>
-                        <div className="grid gap-4">
+                        <div className="grid gap-5">
                             <div className="grid gap-2">
-                                <Label htmlFor="full_name">Full name</Label>
+                                <Label htmlFor="full_name" className="text-slate-300 ml-1 text-sm font-medium">Full Name</Label>
                                 <Input
                                     id="full_name"
                                     name="full_name"
@@ -33,13 +33,14 @@ export default function Register() {
                                     tabIndex={1}
                                     autoComplete="name"
                                     placeholder="Jane Doe"
+                                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-purple-500/50 transition-all duration-300"
                                 />
                                 <InputError message={errors.full_name} />
                             </div>
 
-                            <div className="grid gap-2 sm:grid-cols-2 sm:gap-3">
+                            <div className="grid gap-4 sm:grid-cols-2">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="email">Email</Label>
+                                    <Label htmlFor="email" className="text-slate-300 ml-1 text-sm font-medium">Email Address</Label>
                                     <Input
                                         id="email"
                                         name="email"
@@ -48,11 +49,12 @@ export default function Register() {
                                         tabIndex={2}
                                         autoComplete="email"
                                         placeholder="you@example.com"
+                                        className="h-11 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-purple-500/50 transition-all duration-300"
                                     />
                                     <InputError message={errors.email} />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="phone">Phone</Label>
+                                    <Label htmlFor="phone" className="text-slate-300 ml-1 text-sm font-medium">Phone Number</Label>
                                     <Input
                                         id="phone"
                                         name="phone"
@@ -61,14 +63,15 @@ export default function Register() {
                                         tabIndex={3}
                                         autoComplete="tel"
                                         placeholder="+234 800 000 0000"
+                                        className="h-11 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-purple-500/50 transition-all duration-300"
                                     />
                                     <InputError message={errors.phone} />
                                 </div>
                             </div>
 
-                            <div className="grid gap-2 sm:grid-cols-2 sm:gap-3">
+                            <div className="grid gap-4 sm:grid-cols-2">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="dob">Date of birth</Label>
+                                    <Label htmlFor="dob" className="text-slate-300 ml-1 text-sm font-medium">Date of Birth</Label>
                                     <Input
                                         id="dob"
                                         name="dob"
@@ -76,11 +79,12 @@ export default function Register() {
                                         required
                                         tabIndex={4}
                                         autoComplete="bday"
+                                        className="h-11 bg-white/5 border-white/10 text-white focus:ring-purple-500/50 transition-all duration-300 [color-scheme:dark]"
                                     />
                                     <InputError message={errors.dob} />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="nationality">Nationality</Label>
+                                    <Label htmlFor="nationality" className="text-slate-300 ml-1 text-sm font-medium">Nationality</Label>
                                     <Input
                                         id="nationality"
                                         name="nationality"
@@ -89,13 +93,14 @@ export default function Register() {
                                         tabIndex={5}
                                         autoComplete="country-name"
                                         placeholder="Nigerian"
+                                        className="h-11 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-purple-500/50 transition-all duration-300"
                                     />
                                     <InputError message={errors.nationality} />
                                 </div>
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="address">Residential address</Label>
+                                <Label htmlFor="address" className="text-slate-300 ml-1 text-sm font-medium">Residential Address</Label>
                                 <Input
                                     id="address"
                                     name="address"
@@ -104,26 +109,28 @@ export default function Register() {
                                     tabIndex={6}
                                     autoComplete="street-address"
                                     placeholder="12 Marina, Lagos"
+                                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-purple-500/50 transition-all duration-300"
                                 />
                                 <InputError message={errors.address} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="gov_id">Government ID number</Label>
+                                <Label htmlFor="gov_id" className="text-slate-300 ml-1 text-sm font-medium">Government ID Number (NIN / BVN)</Label>
                                 <Input
                                     id="gov_id"
                                     name="gov_id"
                                     type="text"
                                     required
                                     tabIndex={7}
-                                    placeholder="NIN / Passport / Driver's license"
+                                    placeholder="Enter your identification number"
+                                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-purple-500/50 transition-all duration-300"
                                 />
                                 <InputError message={errors.gov_id} />
-                                <p className="text-xs text-slate-500">Encrypted at rest. Used for KYC verification.</p>
+                                <p className="text-[10px] text-slate-500 ml-1 italic tracking-wide">SECURELY ENCRYPTED VIA AES-256-GCM</p>
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="username">Username</Label>
+                                <Label htmlFor="username" className="text-slate-300 ml-1 text-sm font-medium">Username</Label>
                                 <Input
                                     id="username"
                                     name="username"
@@ -132,32 +139,35 @@ export default function Register() {
                                     tabIndex={8}
                                     autoComplete="username"
                                     placeholder="jane_doe"
+                                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-purple-500/50 transition-all duration-300"
                                 />
                                 <InputError message={errors.username} />
                             </div>
 
-                            <div className="grid gap-2 sm:grid-cols-2 sm:gap-3">
+                            <div className="grid gap-4 sm:grid-cols-2">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="password">Password</Label>
+                                    <Label htmlFor="password" row={false} className="text-slate-300 ml-1 text-sm font-medium">Create Password</Label>
                                     <PasswordInput
                                         id="password"
                                         name="password"
                                         required
                                         tabIndex={9}
                                         autoComplete="new-password"
-                                        placeholder="Password"
+                                        placeholder="••••••••"
+                                        className="h-11 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-purple-500/50 transition-all duration-300"
                                     />
                                     <InputError message={errors.password} />
                                 </div>
                                 <div className="grid gap-2">
-                                    <Label htmlFor="password_confirmation">Confirm</Label>
+                                    <Label htmlFor="password_confirmation" className="text-slate-300 ml-1 text-sm font-medium">Confirm</Label>
                                     <PasswordInput
                                         id="password_confirmation"
                                         name="password_confirmation"
                                         required
                                         tabIndex={10}
                                         autoComplete="new-password"
-                                        placeholder="Confirm password"
+                                        placeholder="••••••••"
+                                        className="h-11 bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:ring-purple-500/50 transition-all duration-300"
                                     />
                                     <InputError message={errors.password_confirmation} />
                                 </div>
@@ -165,19 +175,19 @@ export default function Register() {
 
                             <Button
                                 type="submit"
-                                className="mt-2 w-full"
+                                className="mt-4 h-12 w-full bg-premium-gradient hover:opacity-90 text-white font-bold text-lg rounded-xl shadow-[0_10px_20px_rgba(124,58,237,0.3)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border-none"
                                 tabIndex={11}
                                 disabled={processing}
                                 data-test="register-user-button"
                             >
-                                {processing && <Spinner />}
-                                Create Account
+                                {processing && <Spinner className="mr-2 h-5 w-5" />}
+                                Open Account
                             </Button>
                         </div>
 
-                        <div className="text-center text-sm text-muted-foreground">
-                            Already have an account?{' '}
-                            <TextLink href={login().url} tabIndex={12}>
+                        <div className="text-center text-sm text-slate-400 mt-2">
+                            Already a member?{' '}
+                            <TextLink href={login().url} tabIndex={12} className="text-purple-400 font-bold hover:text-purple-300 transition-colors">
                                 Sign In
                             </TextLink>
                         </div>

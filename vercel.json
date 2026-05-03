@@ -1,8 +1,12 @@
 {
-  "buildCommand": "cd frontend && npm install && npm run build",
-  "outputDirectory": "frontend/dist",
-  "framework": "vite",
+  "buildCommand": "cd frontend && npm install && npm run build && cd .. && mkdir -p public_html && cp -r frontend/dist/* public_html/",
+  "outputDirectory": "public_html",
+  "cleanUrls": true,
   "rewrites": [
+    {
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

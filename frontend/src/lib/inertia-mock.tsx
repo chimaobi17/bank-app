@@ -60,17 +60,33 @@ export function useForm(initialData: any = {}) {
 
     const post = async (url: string, options: any = {}) => {
         setProcessing(true);
+        if (options.onStart) options.onStart();
         try {
             const response = await api.post(url, data);
             if (options.onSuccess) options.onSuccess(response);
         } catch (error: any) {
-            if (options.onError) setErrors(error.response?.data?.errors || {});
+            const serverErrors = error.response?.data?.errors || { email: 'Failed to connect to the banking server.' };
+            setErrors(serverErrors);
+            if (options.onError) options.onError(serverErrors);
         } finally {
             setProcessing(false);
+            if (options.onFinish) options.onFinish();
         }
     };
 
-    return { data, setData, post, processing, errors, reset: () => setData(initialData) };
+    return { 
+        data, 
+        setData, 
+        post, 
+        processing, 
+        errors, 
+        hasErrors: Object.keys(errors).length > 0,
+        recentlySuccessful: false,
+        wasSuccessful: false,
+        reset: () => setData(initialData),
+        clearErrors: () => setErrors({}),
+        setError: (field: string, value: string) => setErrors(prev => ({ ...prev, [field]: value })),
+    };
 }
 
 export function Form({ children, action, method = 'post', ...props }: any) {

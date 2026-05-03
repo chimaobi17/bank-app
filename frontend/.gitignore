@@ -1,0 +1,10 @@
+# Build
+dist
+public_dist
+public_html
+
+# Dependencies
+node_modules
+
+# Vercel
+.vercel

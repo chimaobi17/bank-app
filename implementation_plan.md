@@ -317,16 +317,19 @@ Recreate the high-fidelity, premium mobile banking interface based on the refere
 - [ ] **Validation & Logging**:
     - [ ] Add explicit validation to ensure the source account has sufficient funds before initiating the bill payment external request.
 
+
 ---
 
-## Phase 22: Card Security & Token Length
-**Goal:** Fix ORA-12899 error by increasing the storage capacity for encrypted sensitive tokens (PAN, Phone).
+## Phase 23: UI Fixes & Premium Auth Styling
+**Goal:** Resolve deployment configuration issues on Vercel and apply the premium design system to the authentication flow.
 
-- [x] **Column Length Expansion**:
-    - [x] Created migration to increase `pan_token` in `CARDS` to 1024.
-    - [x] Increased `phone` in `CUSTOMERS` and `USERS` to 1024 to accommodate long encrypted strings.
-- [x] **Verification**:
-    - [x] Applied migration to Oracle 21c and verified `DATA_LENGTH` via Tinker.
+- [ ] **Deployment Stabilization**:
+    - [ ] Consolidate `vercel.json` and ensure it correctly builds the `frontend` subdirectory and serves from `dist`.
+    - [ ] Fix asset resolution issues in the deployed environment.
+- [ ] **Premium Auth UI**:
+    - [ ] Update `AuthSimpleLayout` with vibrant background glows and enhanced glassmorphism.
+    - [ ] Apply `bg-premium-gradient` and modern typography to `Login` and `Register` pages.
+    - [ ] Implement subtle micro-animations for interactive elements.
 
 ## Verification Plan
 
