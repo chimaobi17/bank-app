@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "cd frontend && npm install && npm run build && cd .. && rm -rf dist && mkdir -p dist && cp -r frontend/dist/* dist/",
+        "build": "cd frontend && npm install && npm run build && cd .. && rm -rf frontend_build && cp -r frontend/dist frontend_build",
         "build:ssr": "vite build && vite build --ssr",
         "dev": "vite",
         "format": "prettier --write resources/",

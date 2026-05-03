@@ -54,6 +54,6 @@ auth.json
 /pnpm-workspace.yaml
 package.xml
 .vercel
-/public_html
+/frontend_build
 /frontend/dist
 /frontend/node_modules
