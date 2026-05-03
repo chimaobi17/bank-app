@@ -1,6 +1,6 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "frontend_build",
+  "outputDirectory": "web_output",
   "cleanUrls": true,
   "rewrites": [
     {
